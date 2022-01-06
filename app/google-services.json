@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "495510264412",
+    "project_id": "questionary-c09d7",
+    "storage_bucket": "questionary-c09d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495510264412:android:ced8f56e36466e7a27a499",
+        "android_client_info": {
+          "package_name": "com.roshan.questionary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "495510264412-8decs1g1o2oquqg5jjaj48jncnuqv5iq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKnSLZHs2o3Wt8fdA7EoS6h-jaFkRITtw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "495510264412-8decs1g1o2oquqg5jjaj48jncnuqv5iq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

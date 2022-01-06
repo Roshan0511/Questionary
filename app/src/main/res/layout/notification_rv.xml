@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/greyish_white"
+    android:paddingStart="10dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingEnd="15dp"
+    tools:ignore="RtlSymmetry">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profilePicNotification"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/placeholder"
+        app:civ_border_color="@color/grey"
+        app:civ_border_width="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="6dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/profilePicNotification"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profilePicNotification"
+        app:layout_constraintTop_toTopOf="@+id/profilePicNotification">
+
+        <TextView
+            android:id="@+id/titleNotification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="serif"
+            android:text="@string/todo"
+            android:textSize="16.5sp" />
+
+        <TextView
+            android:id="@+id/dateRvNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="@string/date"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

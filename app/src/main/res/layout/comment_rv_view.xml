@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingStart="10dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingEnd="15dp"
+    tools:ignore="RtlSymmetry">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profilePicRvForList"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/placeholder"
+        app:civ_border_color="@color/grey"
+        app:civ_border_width="1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardView2" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        app:cardBackgroundColor="@color/greyish_white"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profilePicRvForList"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nameRvForList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="15sp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/name" />
+
+            <TextView
+                android:id="@+id/commentRvForList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="14sp"
+                android:text="@string/comment" />
+
+            <TextView
+                android:id="@+id/dateRvForList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="3dp"
+                android:textSize="12sp"
+                android:layout_gravity="end"
+                android:text="@string/date" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
