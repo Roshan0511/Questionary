@@ -162,7 +162,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="serif"
                 android:text="@string/my_questions"
-                android:textSize="22sp" />
+                android:textSize="21sp" />
         </androidx.cardview.widget.CardView>
 
         <ProgressBar
@@ -194,7 +194,7 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="20dp"
                 android:text="@string/my_answers"
-                android:textSize="20sp"
+                android:textSize="19sp"
                 app:drawableStartCompat="@drawable/ic_baseline_check_circle_outline_24"
                 app:layout_constraintEnd_toEndOf="@id/constraintLayout"
                 app:layout_constraintStart_toStartOf="@id/constraintLayout"
@@ -207,7 +207,7 @@
                 android:layout_marginTop="25dp"
                 android:drawablePadding="20dp"
                 android:text="@string/recommendation"
-                android:textSize="20sp"
+                android:textSize="19sp"
                 app:drawableStartCompat="@drawable/ic_baseline_people_24"
                 app:layout_constraintEnd_toEndOf="@id/constraintLayout"
                 app:layout_constraintStart_toStartOf="@id/constraintLayout"
@@ -220,7 +220,7 @@
                 android:layout_marginTop="25dp"
                 android:drawablePadding="20dp"
                 android:text="@string/log_out"
-                android:textSize="20sp"
+                android:textSize="19sp"
                 app:drawableStartCompat="@drawable/ic_baseline_exit_to_app_24"
                 app:layout_constraintEnd_toEndOf="@id/constraintLayout"
                 app:layout_constraintStart_toStartOf="@id/constraintLayout"
@@ -235,7 +235,7 @@
             android:layout_marginBottom="15dp"
             android:gravity="center_horizontal"
             android:text="@string/version_1_0_0"
-            android:textSize="18sp"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/constraintLayout"
             app:layout_constraintStart_toStartOf="@id/constraintLayout"

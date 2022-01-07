@@ -7,6 +7,7 @@ public class NotificationModel {
     private String postID;
     private String postedBY;
     private Boolean checkOpen;
+    private String notificationId;
 
     public NotificationModel() {
     }
@@ -57,5 +58,13 @@ public class NotificationModel {
 
     public void setCheckOpen(Boolean checkOpen) {
         this.checkOpen = checkOpen;
+    }
+
+    public String getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(String notificationId) {
+        this.notificationId = notificationId;
     }
 }

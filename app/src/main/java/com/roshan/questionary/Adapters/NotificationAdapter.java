@@ -2,10 +2,12 @@ package com.roshan.questionary.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.roshan.questionary.CommentActivity;
 import com.roshan.questionary.Models.NotificationModel;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
@@ -42,7 +45,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return new viewHolder(view);
     }
 
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint({"SimpleDateFormat", "ResourceAsColor"})
     @Override
     public void onBindViewHolder(@NonNull NotificationAdapter.viewHolder holder, int position) {
         NotificationModel model = list.get(position);
@@ -75,16 +78,23 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        Toast.makeText(context, "Error : " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+
+
+        holder.binding.notificationItem.setOnClickListener(v -> {
+            Intent intent = new Intent(context, CommentActivity.class);
+            intent.putExtra("postId", model.getPostID());
+            intent.putExtra("userId", model.getPostedBY());
+            context.startActivity(intent);
+        });
     }
 
     @Override
     public int getItemCount() {
         return list.size();
     }
-
 
 
     public static class viewHolder extends RecyclerView.ViewHolder {

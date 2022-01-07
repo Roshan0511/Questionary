@@ -69,6 +69,8 @@ public class NotificationFragment extends Fragment {
                         if (snapshot.exists()){
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                                 NotificationModel model = dataSnapshot.getValue(NotificationModel.class);
+                                assert model != null;
+                                model.setNotificationId(dataSnapshot.getKey());
                                 list.add(model);
                             }
                         }

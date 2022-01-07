@@ -4,14 +4,6 @@ public class UserModel {
     private String name, email, password;
     private String profilePic;
 
-    public String getProfilePic() {
-        return profilePic;
-    }
-
-    public void setProfilePic(String profilePic) {
-        this.profilePic = profilePic;
-    }
-
     public UserModel(String name, String email, String password) {
         this.name = name;
         this.email = email;
@@ -19,6 +11,14 @@ public class UserModel {
     }
 
     public UserModel() {
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 
     public String getName() {
