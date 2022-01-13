@@ -1,10 +1,9 @@
-package com.roshan.questionary;
+package com.roshan.questionary.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -23,6 +22,7 @@ import com.roshan.questionary.Models.CommentModel;
 import com.roshan.questionary.Models.NotificationModel;
 import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.Models.UserModel;
+import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.ActivityCommentBinding;
 import com.squareup.picasso.Picasso;
 

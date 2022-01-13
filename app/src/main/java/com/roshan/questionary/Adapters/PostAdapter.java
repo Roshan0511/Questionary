@@ -16,7 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.roshan.questionary.CommentActivity;
+import com.roshan.questionary.Activities.CommentActivity;
 import com.roshan.questionary.Models.NotificationModel;
 import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.R;
@@ -24,8 +24,6 @@ import com.roshan.questionary.databinding.QuestionsRvViewBinding;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;

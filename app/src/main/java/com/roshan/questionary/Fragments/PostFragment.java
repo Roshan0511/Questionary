@@ -10,9 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -25,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.roshan.questionary.MainActivity;
+import com.roshan.questionary.Activities.MainActivity;
 import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;

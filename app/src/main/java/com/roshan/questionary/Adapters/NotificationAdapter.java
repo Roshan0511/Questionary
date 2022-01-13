@@ -15,7 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.roshan.questionary.CommentActivity;
+import com.roshan.questionary.Activities.CommentActivity;
 import com.roshan.questionary.Models.NotificationModel;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;

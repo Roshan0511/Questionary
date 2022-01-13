@@ -1,6 +1,5 @@
 package com.roshan.questionary.Authentication;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,9 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.roshan.questionary.MainActivity;
+import com.roshan.questionary.Activities.MainActivity;
 import com.roshan.questionary.databinding.ActivitySignInBinding;
 
 public class SignIn extends AppCompatActivity {

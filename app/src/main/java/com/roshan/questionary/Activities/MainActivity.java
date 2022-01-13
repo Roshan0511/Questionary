@@ -1,4 +1,4 @@
-package com.roshan.questionary;
+package com.roshan.questionary.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,6 +15,7 @@ import com.roshan.questionary.Fragments.NotificationFragment;
 import com.roshan.questionary.Fragments.PostFragment;
 import com.roshan.questionary.Fragments.ProfileFragment;
 import com.roshan.questionary.Fragments.SearchFragment;
+import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
