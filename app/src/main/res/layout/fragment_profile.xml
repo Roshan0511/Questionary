@@ -67,8 +67,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/placeholder"
@@ -149,7 +149,6 @@
             android:layout_marginEnd="20dp"
             android:padding="10dp"
             app:cardCornerRadius="10dp"
-            app:cardElevation="2dp"
             app:layout_constraintEnd_toEndOf="@id/innerView"
             app:layout_constraintStart_toStartOf="@id/innerView"
             app:layout_constraintTop_toBottomOf="@+id/cardView">
@@ -164,17 +163,6 @@
                 android:text="@string/my_questions"
                 android:textSize="21sp" />
         </androidx.cardview.widget.CardView>
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -201,7 +189,7 @@
                 app:layout_constraintTop_toTopOf="@id/constraintLayout" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/recommendation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
@@ -224,7 +212,7 @@
                 app:drawableStartCompat="@drawable/ic_baseline_exit_to_app_24"
                 app:layout_constraintEnd_toEndOf="@id/constraintLayout"
                 app:layout_constraintStart_toStartOf="@id/constraintLayout"
-                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                app:layout_constraintTop_toBottomOf="@+id/recommendation" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -240,7 +228,18 @@
             app:layout_constraintEnd_toEndOf="@id/constraintLayout"
             app:layout_constraintStart_toStartOf="@id/constraintLayout"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-            app:layout_constraintVertical_bias="0.85" />
+            app:layout_constraintVertical_bias="0.90" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

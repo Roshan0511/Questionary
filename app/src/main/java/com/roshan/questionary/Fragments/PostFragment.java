@@ -4,17 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +28,6 @@ import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.FragmentPostBinding;
-import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 import java.util.Objects;
@@ -51,8 +51,6 @@ public class PostFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentPostBinding.inflate(inflater, container, false);
 
-        setHasOptionsMenu(true);
-
         // Initialization ------------------>
 
         auth = FirebaseAuth.getInstance();
@@ -72,7 +70,7 @@ public class PostFragment extends Fragment {
                     UserModel userModel = snapshot.getValue(UserModel.class);
                     assert userModel != null;
 
-                    Picasso.get()
+                    Glide.with(requireActivity())
                             .load(userModel.getProfilePic())
                             .placeholder(R.drawable.placeholder)
                             .into(binding.profilePicPost);
@@ -102,13 +100,9 @@ public class PostFragment extends Fragment {
 
         //Click on Post Button --------------------->
 
-        binding.postBtn.setOnClickListener(v -> {
-            postBtnClicked();
-        });
+        binding.postBtn.setOnClickListener(v -> postBtnClicked());
 
-        binding.sendPostIcon.setOnClickListener(v -> {
-            postBtnClicked();
-        });
+        binding.sendPostIcon.setOnClickListener(v -> postBtnClicked());
 
         return binding.getRoot();
     }
@@ -139,7 +133,7 @@ public class PostFragment extends Fragment {
         requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-        if (binding.askQuestionET.getText().toString().isEmpty()){
+        if (binding.askQuestionET.getText().toString().trim().equals("")){
             binding.askQuestionET.setError("Not Empty");
             binding.progressBar.setVisibility(View.GONE);
             requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -167,7 +161,7 @@ public class PostFragment extends Fragment {
 
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
-                    getActivity().finish();
+                    requireActivity().finish();
                 });
             }));
         }
@@ -188,8 +182,29 @@ public class PostFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
-                getActivity().finish();
+                requireActivity().finish();
             });
         }
     }
+
+//    private void pressBackButton(){
+//        Intent intent = new Intent(requireActivity(), MainActivity.class);
+//        startActivity(intent);
+//    }
+//
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//        requireView().setFocusableInTouchMode(true);
+//        requireView().requestFocus();
+//        requireView().setOnKeyListener((v, keyCode, event) -> {
+//            if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+//                pressBackButton();
+//                return true;
+//            }
+//            return false;
+//        });
+//    }
 }

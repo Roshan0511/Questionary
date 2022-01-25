@@ -71,7 +71,9 @@ public class NotificationFragment extends Fragment {
                                 NotificationModel model = dataSnapshot.getValue(NotificationModel.class);
                                 assert model != null;
                                 model.setNotificationId(dataSnapshot.getKey());
-                                list.add(model);
+                                if (!model.getPostID().isEmpty()){
+                                    list.add(model);
+                                }
                             }
                         }
                         adapter.notifyDataSetChanged();
@@ -83,4 +85,25 @@ public class NotificationFragment extends Fragment {
                     }
                 });
     }
+
+//    private void pressBackButton(){
+//        Intent intent = new Intent(requireActivity(), MainActivity.class);
+//        startActivity(intent);
+//    }
+//
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//        requireView().setFocusableInTouchMode(true);
+//        requireView().requestFocus();
+//        requireView().setOnKeyListener((v, keyCode, event) -> {
+//            if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+//                pressBackButton();
+//                return true;
+//            }
+//            return false;
+//        });
+//    }
 }

@@ -2,22 +2,26 @@ package com.roshan.questionary.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.roshan.questionary.Adapters.CommentAdapter;
+import com.roshan.questionary.Dialogs.BottomSheetDialogForOfficials;
+import com.roshan.questionary.Dialogs.BottomSheetDialogForUnOfficials;
 import com.roshan.questionary.Models.CommentModel;
 import com.roshan.questionary.Models.NotificationModel;
 import com.roshan.questionary.Models.PostModel;
@@ -48,6 +52,8 @@ public class CommentActivity extends AppCompatActivity {
         binding = ActivityCommentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
@@ -57,11 +63,24 @@ public class CommentActivity extends AppCompatActivity {
         setDataInCommentActivity();
 
         binding.sendCommentBtn.setOnClickListener(v -> {
-            if (binding.commentsET.getText().toString().isEmpty()){
+            if (binding.commentsET.getText().toString().trim().equals("")){
                 binding.commentsET.setError("Required!");
             }
             else {
                 setCommentData();
+            }
+        });
+
+        binding.optionMenuCommentAc.setOnClickListener(v -> {
+            if (userId.equals(auth.getUid())){
+                BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetDialogForOfficials(CommentActivity.this,
+                        postId, userId);
+                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            }
+            else {
+                BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetDialogForUnOfficials(CommentActivity.this
+                        , postId, userId);
+                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
             }
         });
 
@@ -110,7 +129,7 @@ public class CommentActivity extends AppCompatActivity {
                     UserModel userModel = snapshot.getValue(UserModel.class);
                     assert userModel != null;
 
-                    Picasso.get()
+                    Glide.with(CommentActivity.this)
                             .load(userModel.getProfilePic())
                             .placeholder(R.drawable.placeholder)
                             .into(binding.profileImagePostCommentAc);
@@ -140,7 +159,8 @@ public class CommentActivity extends AppCompatActivity {
 
                     if (!post.getQuestionImage().isEmpty()){
                         binding.questionImgCommentAc.setVisibility(View.VISIBLE);
-                        Picasso.get()
+
+                        Glide.with(CommentActivity.this)
                                 .load(post.getQuestionImage())
                                 .placeholder(R.drawable.placeholder)
                                 .into(binding.questionImgCommentAc);
@@ -278,8 +298,10 @@ public class CommentActivity extends AppCompatActivity {
 
     // Back to Main Activity -------------------------->
     private void back(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
+//        finish();
+
+        onBackPressed();
     }
 }

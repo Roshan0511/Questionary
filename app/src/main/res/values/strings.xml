@@ -39,4 +39,16 @@
     <string name="discover">Discover</string>
     <string name="search">Search</string>
     <string name="notification">Notification</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="share">Share</string>
+    <string name="view_profile">View Profile</string>
+    <string name="download">Download</string>
+    <string name="refresh">Refresh</string>
+    <string name="no_data">NO DATA</string>
+    <string name="change_image">Change Image</string>
+    <string name="update">Update</string>
+    <string name="edit_question">Edit Question</string>
+    <string name="exit">Exit</string>
 </resources>

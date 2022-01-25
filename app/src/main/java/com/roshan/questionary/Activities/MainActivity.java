@@ -1,6 +1,8 @@
 package com.roshan.questionary.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
@@ -18,6 +20,8 @@ import com.roshan.questionary.Fragments.SearchFragment;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.ActivityMainBinding;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
@@ -27,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         android.net.NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -53,43 +59,68 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
 
         binding.bottomNavigationBar.setOnNavigationItemSelectedListener(item -> {
+            Fragment fragment = null;
             switch (item.getItemId()){
                 case R.id.home:
-                    HomeFragment homeFragment1 = new HomeFragment();
-                    FragmentTransaction transaction12 = getSupportFragmentManager().beginTransaction();
-                    transaction12.replace(R.id.linearLayout, homeFragment1);
-                    transaction12.commit();
+                    if (binding.bottomNavigationBar.getSelectedItemId()==R.id.home){
+                        return false;
+                    }
+                    fragment = new HomeFragment();
                     break;
 
                 case R.id.search:
-                    SearchFragment searchFragment = new SearchFragment();
-                    FragmentTransaction transaction4 = getSupportFragmentManager().beginTransaction();
-                    transaction4.replace(R.id.linearLayout, searchFragment);
-                    transaction4.commit();
+                    if (binding.bottomNavigationBar.getSelectedItemId()==R.id.search){
+                        return false;
+                    }
+                    fragment = new SearchFragment();
                     break;
 
                 case R.id.post:
-                    PostFragment postFragment = new PostFragment();
-                    FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
-                    transaction1.replace(R.id.linearLayout, postFragment);
-                    transaction1.commit();
+                    if (binding.bottomNavigationBar.getSelectedItemId()==R.id.post){
+                        return false;
+                    }
+                    fragment = new PostFragment();
                     break;
 
                 case R.id.notification:
-                    NotificationFragment notificationFragment = new NotificationFragment();
-                    FragmentTransaction transaction3 = getSupportFragmentManager().beginTransaction();
-                    transaction3.replace(R.id.linearLayout, notificationFragment);
-                    transaction3.commit();
+                    if (binding.bottomNavigationBar.getSelectedItemId()==R.id.notification){
+                        return false;
+                    }
+                    fragment = new NotificationFragment();
                     break;
 
                 case R.id.profile:
-                    ProfileFragment profileFragment = new ProfileFragment();
-                    FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
-                    transaction2.replace(R.id.linearLayout, profileFragment);
-                    transaction2.commit();
+                    if (binding.bottomNavigationBar.getSelectedItemId()==R.id.profile){
+                        return false;
+                    }
+                    fragment = new ProfileFragment();
                     break;
             }
+
+            FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
+            assert fragment != null;
+            transaction1.replace(R.id.linearLayout, fragment);
+            transaction1.commit();
+
             return true;
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (binding.bottomNavigationBar.getSelectedItemId()==R.id.home || binding.bottomNavigationBar.getSelectedItemId()==R.id.post ||
+        binding.bottomNavigationBar.getSelectedItemId()==R.id.profile){
+            new AlertDialog.Builder(this)
+                .setTitle("Exit")
+                .setMessage("Are you sure you want to exit")
+                .setIcon(R.drawable.ic_baseline_exit_to_app_24)
+                .setCancelable(false)
+                .setNegativeButton("Cancel", (dialog12, which) -> dialog12.dismiss())
+                .setPositiveButton("Exit", (dialog1, which) -> finish())
+                .show();
+        }
+        else {
+            binding.bottomNavigationBar.setSelectedItemId(R.id.home);
+        }
     }
 }

@@ -9,19 +9,23 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.roshan.questionary.Activities.CommentActivity;
+import com.roshan.questionary.Dialogs.BottomSheetDialogForOfficials;
+import com.roshan.questionary.Dialogs.BottomSheetDialogForUnOfficials;
 import com.roshan.questionary.Models.NotificationModel;
 import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.QuestionsRvViewBinding;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,6 +37,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
     Context context;
     List<PostModel> list;
     FirebaseDatabase database;
+
+    public PostAdapter() {
+        database = FirebaseDatabase.getInstance();
+    }
 
     public PostAdapter(Context context, List<PostModel> list) {
         this.context = context;
@@ -47,7 +55,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
         return new viewHolder(view);
     }
 
-    @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
+    @SuppressLint({"SetTextI18n", "SimpleDateFormat", "NotifyDataSetChanged"})
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
 
@@ -64,7 +72,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
 
         if (!model.getQuestionImage().isEmpty()){
             holder.binding.questionImgrv.setVisibility(View.VISIBLE);
-            Picasso.get()
+
+            Glide.with(context)
                     .load(model.getQuestionImage())
                     .placeholder(R.drawable.placeholder)
                     .into(holder.binding.questionImgrv);
@@ -78,7 +87,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
                 PostModel post = snapshot.getValue(PostModel.class);
                 assert post != null;
 
-                Picasso.get()
+                Glide.with(context)
                         .load(post.getProfilePic())
                         .placeholder(R.drawable.placeholder)
                         .into(holder.binding.profileImageRv);
@@ -149,6 +158,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
             intent.putExtra("userId", model.getUserId());
             context.startActivity(intent);
         });
+
+
+        holder.binding.optionMenu.setOnClickListener(v ->{
+            if (model.getUserId().equals(FirebaseAuth.getInstance().getUid())){
+                BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetDialogForOfficials(context, model.getPostId(),
+                        model.getUserId());
+                bottomSheetDialogFragment.show(((FragmentActivity)context).getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            }
+            else {
+                BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetDialogForUnOfficials(context, model.getPostId(),
+                        model.getUserId());
+                bottomSheetDialogFragment.show(((FragmentActivity)context).getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            }
+            notifyDataSetChanged();
+        });
     }
 
     @Override
@@ -163,5 +187,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
 
             binding = QuestionsRvViewBinding.bind(itemView);
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void filteredList(List<PostModel> filterList){
+        list = filterList;
+        notifyDataSetChanged();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void deleteData(String postId){
+        database.getReference().child("posts")
+                .child(postId)
+                .removeValue();
+
+        notifyDataSetChanged();
     }
 }

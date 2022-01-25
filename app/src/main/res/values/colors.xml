@@ -12,4 +12,9 @@
     <color name="appColor">#64B5F6</color>
     <color name="grey">#BDBDBD</color>
     <color name="greyish_white">#F5F5F5</color>
+    <color name="red">#F44336</color>
+    <color name="light_blue">#FF80AB</color>
+
+
+    <color name="transparent">#00000000</color>
 </resources>

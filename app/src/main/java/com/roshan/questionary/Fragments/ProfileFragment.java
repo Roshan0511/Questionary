@@ -8,13 +8,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,11 +25,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.roshan.questionary.Activities.MainActivity;
 import com.roshan.questionary.Authentication.SignIn;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.FragmentProfileBinding;
-import com.squareup.picasso.Picasso;
 import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
@@ -65,10 +68,26 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.logout.setOnClickListener(v -> {
-            auth.signOut();
             Intent intent = new Intent(getContext(), SignIn.class);
+            auth.signOut();
             startActivity(intent);
             requireActivity().finish();
+        });
+
+        binding.myQuestionTxt.setOnClickListener(v -> {
+            MyQuestionsFragment fragment = new MyQuestionsFragment();
+            assert getFragmentManager() != null;
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.linearLayout, fragment);
+            transaction.commit();
+        });
+
+        binding.recommendation.setOnClickListener(v -> {
+            Fragment fragment = new SearchFragment();
+            assert getFragmentManager() != null;
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.linearLayout, fragment);
+            transaction.commit();
         });
 
         return binding.getRoot();
@@ -123,7 +142,8 @@ public class ProfileFragment extends Fragment {
                             UserModel user = snapshot.getValue(UserModel.class);
 
                             assert user != null;
-                            Picasso.get()
+
+                            Glide.with(requireActivity())
                                     .load(user.getProfilePic())
                                     .placeholder(R.drawable.placeholder)
                                     .into(binding.profileImage);

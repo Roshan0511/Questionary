@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
-        android:paddingTop="10dp"
+        android:paddingTop="7dp"
         android:paddingEnd="8dp"
         android:paddingBottom="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,8 +61,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image_post_comment_ac"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
             android:src="@drawable/placeholder"
             app:civ_border_color="#E0E0E0"
             app:civ_border_width="1dp"
@@ -76,7 +76,7 @@
             android:layout_marginStart="15dp"
             android:fontFamily="serif"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="17sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/profile_image_post_comment_ac"
             app:layout_constraintStart_toEndOf="@+id/profile_image_post_comment_ac"
             app:layout_constraintTop_toTopOf="@+id/profile_image_post_comment_ac" />
@@ -108,9 +108,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="7dp"
-            android:text="TextView"
+            android:text=""
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="16sp"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@id/constraintLayout2"
             app:layout_constraintTop_toBottomOf="@+id/view2" />
 

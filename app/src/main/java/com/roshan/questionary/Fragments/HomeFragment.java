@@ -4,10 +4,14 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -19,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.roshan.questionary.Adapters.PostAdapter;
 import com.roshan.questionary.Models.PostModel;
+import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
@@ -28,6 +33,7 @@ public class HomeFragment extends Fragment {
 
     FragmentHomeBinding binding;
     List<PostModel> list;
+    List<PostModel> filteredList;
     PostAdapter adapter;
 
     FirebaseAuth auth;
@@ -43,6 +49,8 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false);
 
+        searchFilter();
+
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
@@ -53,6 +61,10 @@ public class HomeFragment extends Fragment {
         adapter = new PostAdapter(getContext(), list);
         binding.rvHome.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvHome.setAdapter(adapter);
+
+        binding.refresh.setOnClickListener(v -> {
+            binding.rvHome.smoothScrollToPosition(0);
+        });
 
         return binding.getRoot();
     }
@@ -74,6 +86,12 @@ public class HomeFragment extends Fragment {
                         post.setPostId(dataSnapshot.getKey());
                         list.add(post);
                     }
+                    if (list.isEmpty()){
+                        binding.empty.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        binding.empty.setVisibility(View.GONE);
+                    }
                 }
                 adapter.notifyDataSetChanged();
                 binding.progressBar3.setVisibility(View.GONE);
@@ -82,6 +100,34 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void searchFilter(){
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filteredList = new ArrayList<>();
+                for (PostModel item: list){
+                    if (item.getQuestionTxt().toLowerCase().contains(newText.toLowerCase())){
+                        filteredList.add(item);
+                    }
+                }
+
+                adapter.filteredList(filteredList);
+                if (filteredList.isEmpty()){
+                    binding.empty.setVisibility(View.VISIBLE);
+                }
+                else {
+                    binding.empty.setVisibility(View.GONE);
+                }
+                return true;
             }
         });
     }
