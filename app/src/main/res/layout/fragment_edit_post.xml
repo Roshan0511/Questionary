@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/inner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".Fragments.PostFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbar2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/backBtn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_back_24" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/edit_question"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+                app:layout_constraintEnd_toEndOf="@id/toolbar2"
+                app:layout_constraintStart_toStartOf="@id/toolbar2"
+                app:layout_constraintTop_toTopOf="@+id/toolbar2" />
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toBottomOf="@id/toolbar2"
+                app:layout_constraintEnd_toEndOf="@id/toolbar2"
+                app:layout_constraintStart_toStartOf="@id/toolbar2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_pic_edit"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/placeholder"
+            app:civ_border_color="@color/grey"
+            app:civ_border_width="1dp"
+            app:layout_constraintStart_toStartOf="@id/inner"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+
+        <TextView
+            android:id="@+id/user_name_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="serif"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="17.5sp"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_pic_edit"
+            app:layout_constraintStart_toEndOf="@+id/profile_pic_edit"
+            app:layout_constraintTop_toTopOf="@+id/profile_pic_edit" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="@color/grey"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/card"
+            app:layout_constraintEnd_toEndOf="@id/inner"
+            app:layout_constraintStart_toStartOf="@id/inner"
+            app:layout_constraintTop_toBottomOf="@+id/profile_pic_edit"
+            app:layout_constraintVertical_bias="0.40" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="30dp"
+            app:cardBackgroundColor="@color/greyish_white"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="@id/inner"
+            app:layout_constraintStart_toStartOf="@id/inner"
+            app:layout_constraintTop_toBottomOf="@+id/profile_pic_edit">
+
+            <EditText
+                android:id="@+id/askQuestionET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:background="@android:color/transparent"
+                android:hint="@string/ask_your_question"
+                android:imeOptions="actionDone"
+                android:inputType="textMultiLine"
+                android:minHeight="85dp"
+                android:maxHeight="105dp"
+                android:padding="13dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/change_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:drawablePadding="20dp"
+            android:fontFamily="serif"
+            android:padding="10dp"
+            android:text="@string/change_image"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="17sp"
+            app:drawableTint="@color/appColor"
+            app:drawableTintMode="add"
+            app:layout_constraintEnd_toEndOf="@id/inner"
+            app:layout_constraintStart_toStartOf="@id/inner"
+            app:layout_constraintTop_toBottomOf="@+id/card"
+            app:drawableStartCompat="@drawable/ic_baseline_image_24" />
+
+        <ImageView
+            android:id="@+id/questionImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:adjustViewBounds="true"
+            android:background="@color/grey"
+            android:contentDescription="@string/todo"
+            android:maxHeight="250dp"
+            android:visibility="gone"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="@id/inner"
+            app:layout_constraintStart_toStartOf="@id/inner"
+            app:layout_constraintTop_toBottomOf="@+id/change_image" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/updateBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/button_bg"
+            android:text="@string/update"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/inner"
+            app:layout_constraintStart_toStartOf="@id/inner"
+            app:layout_constraintTop_toBottomOf="@+id/questionImage"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_pic_edit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
