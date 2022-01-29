@@ -1,6 +1,5 @@
 package com.roshan.questionary.Activities;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.roshan.questionary.Dialogs.ExitAppDialog;
 import com.roshan.questionary.Fragments.HomeFragment;
 import com.roshan.questionary.Fragments.NotificationFragment;
 import com.roshan.questionary.Fragments.PostFragment;
@@ -108,16 +108,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (binding.bottomNavigationBar.getSelectedItemId()==R.id.home || binding.bottomNavigationBar.getSelectedItemId()==R.id.post ||
-        binding.bottomNavigationBar.getSelectedItemId()==R.id.profile){
-            new AlertDialog.Builder(this)
-                .setTitle("Exit")
-                .setMessage("Are you sure you want to exit")
-                .setIcon(R.drawable.ic_baseline_exit_to_app_24)
-                .setCancelable(false)
-                .setNegativeButton("Cancel", (dialog12, which) -> dialog12.dismiss())
-                .setPositiveButton("Exit", (dialog1, which) -> finish())
-                .show();
+        if (binding.bottomNavigationBar.getSelectedItemId()==R.id.home ||
+                binding.bottomNavigationBar.getSelectedItemId()==R.id.post ||
+                binding.bottomNavigationBar.getSelectedItemId()==R.id.profile){
+
+            ExitAppDialog dialog = new ExitAppDialog();
+            dialog.show(getSupportFragmentManager(), dialog.getTag());
+            dialog.setCancelable(false);
+
         }
         else {
             binding.bottomNavigationBar.setSelectedItemId(R.id.home);

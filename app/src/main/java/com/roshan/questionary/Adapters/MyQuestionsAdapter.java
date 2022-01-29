@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.roshan.questionary.Activities.CommentActivity;
 import com.roshan.questionary.Dialogs.BottomSheetDialogForOfficials;
+import com.roshan.questionary.Dialogs.ShowingImageDialog;
 import com.roshan.questionary.Models.NotificationModel;
 import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.R;
@@ -156,6 +157,12 @@ public class MyQuestionsAdapter extends RecyclerView.Adapter<MyQuestionsAdapter.
             intent.putExtra("postId", model.getPostId());
             intent.putExtra("userId", model.getUserId());
             context.startActivity(intent);
+        });
+
+        holder.binding.mqQuestionImgrv.setOnClickListener(v -> {
+            ShowingImageDialog dialog = new ShowingImageDialog(model.getPostId());
+            dialog.show(((FragmentActivity)context).getSupportFragmentManager(), dialog.getTag());
+            dialog.setCancelable(false);
         });
     }
 

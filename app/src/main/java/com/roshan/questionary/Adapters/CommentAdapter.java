@@ -8,18 +8,20 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.roshan.questionary.Dialogs.DeleteCommentDialog;
 import com.roshan.questionary.Models.CommentModel;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.CommentRvViewBinding;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,11 +31,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
 
     Context context;
     List<CommentModel> list;
+    String postId;
     FirebaseDatabase database;
 
-    public CommentAdapter(Context context, List<CommentModel> list) {
+    public CommentAdapter(Context context, List<CommentModel> list, String postId) {
         this.context = context;
         this.list = list;
+        this.postId = postId;
+        database = FirebaseDatabase.getInstance();
+    }
+
+    public CommentAdapter() {
         database = FirebaseDatabase.getInstance();
     }
 
@@ -75,6 +83,22 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
                         Toast.makeText(context, "Error : " + error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
+
+
+        holder.binding.cardView2.setOnLongClickListener(v -> {
+            if (model.getCommentedBy().equals(FirebaseAuth.getInstance().getUid())){
+
+                DeleteCommentDialog dialog = new DeleteCommentDialog(postId, model.getCommentId());
+                dialog.show(((FragmentActivity)context).getSupportFragmentManager(), dialog.getTag());
+                dialog.setCancelable(false);
+
+                return true;
+            }
+            else {
+                Toast.makeText(context, "You can't handle this answer", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
     @Override
@@ -89,5 +113,43 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
             super(itemView);
             binding = CommentRvViewBinding.bind(itemView);
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void deleteComment(String postId, String commentId){
+        database.getReference()
+                .child("posts")
+                .child(postId)
+                .child("comments")
+                .child(commentId)
+                .removeValue();
+
+
+
+        database.getReference()
+                .child("posts")
+                .child(postId)
+                .child("commentCount")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int commentsCount = 0;
+                if (snapshot.exists()){
+                    commentsCount = snapshot.getValue(Integer.class);
+                }
+                database.getReference()
+                        .child("posts")
+                        .child(postId)
+                        .child("commentCount")
+                        .setValue(commentsCount - 1);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(context, "Error : " + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        notifyDataSetChanged();
     }
 }

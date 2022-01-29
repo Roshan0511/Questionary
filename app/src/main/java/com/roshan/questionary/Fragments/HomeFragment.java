@@ -9,9 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -23,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.roshan.questionary.Adapters.PostAdapter;
 import com.roshan.questionary.Models.PostModel;
-import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
@@ -53,7 +49,6 @@ public class HomeFragment extends Fragment {
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-
         list = new ArrayList<>();
 
         setDataForPostAdapter();
@@ -62,9 +57,7 @@ public class HomeFragment extends Fragment {
         binding.rvHome.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvHome.setAdapter(adapter);
 
-        binding.refresh.setOnClickListener(v -> {
-            binding.rvHome.smoothScrollToPosition(0);
-        });
+        binding.refresh.setOnClickListener(v -> binding.rvHome.smoothScrollToPosition(0));
 
         return binding.getRoot();
     }
@@ -86,6 +79,7 @@ public class HomeFragment extends Fragment {
                         post.setPostId(dataSnapshot.getKey());
                         list.add(post);
                     }
+
                     if (list.isEmpty()){
                         binding.empty.setVisibility(View.VISIBLE);
                     }

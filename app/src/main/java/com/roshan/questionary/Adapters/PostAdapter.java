@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.roshan.questionary.Activities.CommentActivity;
 import com.roshan.questionary.Dialogs.BottomSheetDialogForOfficials;
 import com.roshan.questionary.Dialogs.BottomSheetDialogForUnOfficials;
+import com.roshan.questionary.Dialogs.ShowingImageDialog;
 import com.roshan.questionary.Models.NotificationModel;
 import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.R;
@@ -42,10 +43,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
         database = FirebaseDatabase.getInstance();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public PostAdapter(Context context, List<PostModel> list) {
         this.context = context;
         this.list = list;
         database = FirebaseDatabase.getInstance();
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -87,10 +90,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
                 PostModel post = snapshot.getValue(PostModel.class);
                 assert post != null;
 
-                Glide.with(context)
-                        .load(post.getProfilePic())
-                        .placeholder(R.drawable.placeholder)
-                        .into(holder.binding.profileImageRv);
+                if (context!=null){
+                    Glide.with(context)
+                            .load(post.getProfilePic())
+                            .placeholder(R.drawable.placeholder)
+                            .into(holder.binding.profileImageRv);
+                }
 
                 holder.binding.namePostRv.setText(post.getName());
             }
@@ -122,27 +127,27 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
                                     .setValue(true)
                                     .addOnSuccessListener(unused ->
                                             database.getReference().child("posts")
-                                                .child(model.getPostId())
-                                                .child("likeCount")
-                                                .setValue(model.getLikeCount() + 1)
-                                                .addOnSuccessListener(unused1 -> {
-                                                    holder.binding.like
-                                                            .setCompoundDrawablesWithIntrinsicBounds
-                                                                    (R.drawable.like, 0, 0, 0);
+                                                    .child(model.getPostId())
+                                                    .child("likeCount")
+                                                    .setValue(model.getLikeCount() + 1)
+                                                    .addOnSuccessListener(unused1 -> {
+                                                        holder.binding.like
+                                                                .setCompoundDrawablesWithIntrinsicBounds
+                                                                        (R.drawable.like, 0, 0, 0);
 
-                                                    NotificationModel notification = new NotificationModel();
-                                                    notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
-                                                    notification.setNotificationAt(new Date().getTime());
-                                                    notification.setPostID(model.getPostId());
-                                                    notification.setPostedBY(model.getUserId());
-                                                    notification.setType("like");
+                                                        NotificationModel notification = new NotificationModel();
+                                                        notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
+                                                        notification.setNotificationAt(new Date().getTime());
+                                                        notification.setPostID(model.getPostId());
+                                                        notification.setPostedBY(model.getUserId());
+                                                        notification.setType("like");
 
-                                                    database.getReference()
-                                                            .child("notification")
-                                                            .child(model.getUserId())
-                                                            .push()
-                                                            .setValue(notification);
-                                                })));
+                                                        database.getReference()
+                                                                .child("notification")
+                                                                .child(model.getUserId())
+                                                                .push()
+                                                                .setValue(notification);
+                                                    })));
                         }
                     }
 
@@ -172,6 +177,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
                 bottomSheetDialogFragment.show(((FragmentActivity)context).getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
             }
             notifyDataSetChanged();
+        });
+
+
+        holder.binding.questionImgrv.setOnClickListener(v -> {
+            ShowingImageDialog dialog = new ShowingImageDialog(model.getPostId());
+            dialog.show(((FragmentActivity)context).getSupportFragmentManager(), dialog.getTag());
+            dialog.setCancelable(false);
         });
     }
 

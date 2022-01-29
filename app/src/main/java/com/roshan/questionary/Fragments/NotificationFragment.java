@@ -48,6 +48,7 @@ public class NotificationFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
 
         getDataFromDatabase();
+
         adapter = new NotificationAdapter(getContext(), list);
         binding.notificationRvList.setAdapter(adapter);
         binding.notificationRvList.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
@@ -85,25 +86,4 @@ public class NotificationFragment extends Fragment {
                     }
                 });
     }
-
-//    private void pressBackButton(){
-//        Intent intent = new Intent(requireActivity(), MainActivity.class);
-//        startActivity(intent);
-//    }
-//
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//
-//        requireView().setFocusableInTouchMode(true);
-//        requireView().requestFocus();
-//        requireView().setOnKeyListener((v, keyCode, event) -> {
-//            if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-//                pressBackButton();
-//                return true;
-//            }
-//            return false;
-//        });
-//    }
 }

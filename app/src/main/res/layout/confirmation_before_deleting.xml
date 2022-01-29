@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp">
@@ -38,7 +39,8 @@
                 android:fontFamily="serif"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
-                android:text="Are you sure that you want to delete this item?"
+                android:text="Are you sure want to delete this question?"
+                android:gravity="center_horizontal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="@+id/cancelBtn"
@@ -73,6 +75,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/delete"
+                android:textSize="20sp"
+                android:fontFamily="serif"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/imageView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

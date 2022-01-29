@@ -2,7 +2,6 @@ package com.roshan.questionary.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,15 +18,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.roshan.questionary.Adapters.CommentAdapter;
-import com.roshan.questionary.Dialogs.BottomSheetDialogForOfficials;
 import com.roshan.questionary.Dialogs.BottomSheetDialogForUnOfficials;
+import com.roshan.questionary.Dialogs.ShowingImageDialog;
 import com.roshan.questionary.Models.CommentModel;
 import com.roshan.questionary.Models.NotificationModel;
 import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.ActivityCommentBinding;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,8 +60,10 @@ public class CommentActivity extends AppCompatActivity {
         setDataInCommentActivity();
 
         binding.sendCommentBtn.setOnClickListener(v -> {
+            binding.sendCommentBtn.setClickable(false);
             if (binding.commentsET.getText().toString().trim().equals("")){
                 binding.commentsET.setError("Required!");
+                binding.sendCommentBtn.setClickable(true);
             }
             else {
                 setCommentData();
@@ -72,19 +71,12 @@ public class CommentActivity extends AppCompatActivity {
         });
 
         binding.optionMenuCommentAc.setOnClickListener(v -> {
-            if (userId.equals(auth.getUid())){
-                BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetDialogForOfficials(CommentActivity.this,
-                        postId, userId);
-                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
-            }
-            else {
-                BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetDialogForUnOfficials(CommentActivity.this
-                        , postId, userId);
-                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
-            }
+            BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetDialogForUnOfficials(CommentActivity.this
+                    , postId, userId);
+            bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
         });
 
-        adapter = new CommentAdapter(CommentActivity.this, list);
+        adapter = new CommentAdapter(CommentActivity.this, list, postId);
         binding.rvComment.setAdapter(adapter);
         binding.rvComment.addItemDecoration(new DividerItemDecoration(CommentActivity.this, DividerItemDecoration.VERTICAL));
         binding.rvComment.setLayoutManager(new LinearLayoutManager(this));
@@ -98,9 +90,13 @@ public class CommentActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         list.clear();
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                            CommentModel comments = dataSnapshot.getValue(CommentModel.class);
-                            list.add(comments);
+                        if (snapshot.exists()){
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                CommentModel comments = dataSnapshot.getValue(CommentModel.class);
+                                assert comments != null;
+                                comments.setCommentId(dataSnapshot.getKey());
+                                list.add(comments);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -112,8 +108,12 @@ public class CommentActivity extends AppCompatActivity {
                 });
 
 
-        binding.backBtn.setOnClickListener(v -> {
-            back();
+        binding.backBtn.setOnClickListener(v -> back());
+
+        binding.questionImgCommentAc.setOnClickListener(v -> {
+            ShowingImageDialog dialog = new ShowingImageDialog(postId);
+            dialog.show(getSupportFragmentManager(), dialog.getTag());
+            dialog.setCancelable(false);
         });
     }
 
@@ -160,7 +160,7 @@ public class CommentActivity extends AppCompatActivity {
                     if (!post.getQuestionImage().isEmpty()){
                         binding.questionImgCommentAc.setVisibility(View.VISIBLE);
 
-                        Glide.with(CommentActivity.this)
+                        Glide.with(getApplicationContext())
                                 .load(post.getQuestionImage())
                                 .placeholder(R.drawable.placeholder)
                                 .into(binding.questionImgCommentAc);
@@ -195,26 +195,23 @@ public class CommentActivity extends AppCompatActivity {
                                                 .child("likes")
                                                 .child(FirebaseAuth.getInstance().getUid())
                                                 .setValue(true)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void unused) {
-                                                        binding.likeCommentAc
-                                                                .setCompoundDrawablesWithIntrinsicBounds
-                                                                        (R.drawable.like, 0, 0, 0);
+                                                .addOnSuccessListener(unused -> {
+                                                    binding.likeCommentAc
+                                                            .setCompoundDrawablesWithIntrinsicBounds
+                                                                    (R.drawable.like, 0, 0, 0);
 
-                                                        NotificationModel notification = new NotificationModel();
-                                                        notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
-                                                        notification.setNotificationAt(new Date().getTime());
-                                                        notification.setPostID(postId);
-                                                        notification.setPostedBY(userId);
-                                                        notification.setType("like");
+                                                    NotificationModel notification = new NotificationModel();
+                                                    notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
+                                                    notification.setNotificationAt(new Date().getTime());
+                                                    notification.setPostID(postId);
+                                                    notification.setPostedBY(userId);
+                                                    notification.setType("like");
 
-                                                        database.getReference()
-                                                                .child("notification")
-                                                                .child(userId)
-                                                                .push()
-                                                                .setValue(notification);
-                                                    }
+                                                    database.getReference()
+                                                            .child("notification")
+                                                            .child(userId)
+                                                            .push()
+                                                            .setValue(notification);
                                                 }));
                                     }
                                 }
@@ -284,13 +281,14 @@ public class CommentActivity extends AppCompatActivity {
                                             .push()
                                             .setValue(notification);
 
+                                    binding.sendCommentBtn.setClickable(true);
                                 });
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(CommentActivity.this, "Error : " + error.getMessage(), Toast.LENGTH_LONG)
-                                .show();
+                        Toast.makeText(CommentActivity.this, "Error : " + error.getMessage(), Toast.LENGTH_LONG).show();
+                        binding.sendCommentBtn.setClickable(true);
                     }
                 }));
     }
@@ -298,10 +296,6 @@ public class CommentActivity extends AppCompatActivity {
 
     // Back to Main Activity -------------------------->
     private void back(){
-//        Intent intent = new Intent(this, MainActivity.class);
-//        startActivity(intent);
-//        finish();
-
         onBackPressed();
     }
 }

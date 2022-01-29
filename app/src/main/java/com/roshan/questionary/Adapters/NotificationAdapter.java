@@ -22,7 +22,6 @@ import com.roshan.questionary.Models.NotificationModel;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.NotificationRvBinding;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -86,11 +85,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 });
 
 
-        holder.binding.notificationItem.setOnClickListener(v -> {
-            Intent intent = new Intent(context, CommentActivity.class);
-            intent.putExtra("postId", model.getPostID());
-            intent.putExtra("userId", model.getPostedBY());
-            context.startActivity(intent);
+//        holder.binding.notificationItem.setOnClickListener(v -> {
+//            Intent intent = new Intent(context, CommentActivity.class);
+//            intent.putExtra("postId", model.getPostID());
+//            intent.putExtra("userId", model.getPostedBY());
+//            context.startActivity(intent);
+//        });
+
+        holder.binding.notificationItem.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(context, "Notification Clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            }
         });
     }
 

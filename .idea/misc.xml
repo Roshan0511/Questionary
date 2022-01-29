@@ -44,6 +44,8 @@
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/comment_rv_view.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/confirmation_before_deleting.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/content_sign_up.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/delete_comment_dialog.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/exit_application_dialog.xml" value="0.2642533936651584" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_edit_post.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_home.xml" value="0.2484375" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_my_questions.xml" value="0.25885416666666666" />
@@ -56,6 +58,7 @@
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/notification_rv.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/questions_rv_view.xml" value="0.26871794871794874" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/search_rv_view.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/showing_image_dialog.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/toolbar.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/menu/bottom_nav_bar.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/menu/home_fragment_menu.xml" value="0.27291666666666664" />

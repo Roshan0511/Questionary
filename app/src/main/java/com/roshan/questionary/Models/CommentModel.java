@@ -1,7 +1,7 @@
 package com.roshan.questionary.Models;
 
 public class CommentModel {
-    private String commentText, commentedBy;
+    private String commentText, commentedBy, commentId;
     private long commentedAt;
 
     public CommentModel() {
@@ -29,5 +29,13 @@ public class CommentModel {
 
     public void setCommentedBy(String commentedBy) {
         this.commentedBy = commentedBy;
+    }
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
     }
 }

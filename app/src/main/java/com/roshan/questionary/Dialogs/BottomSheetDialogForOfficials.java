@@ -75,6 +75,7 @@ public class BottomSheetDialogForOfficials extends BottomSheetDialogFragment {
         binding.deletePostHome.setOnClickListener(v -> {
             DeleteDialog dialog = new DeleteDialog(context, postId);
             dialog.show(((FragmentActivity)context).getSupportFragmentManager(), dialog.getTag());
+            dialog.setCancelable(false);
             dismiss();
         });
 
