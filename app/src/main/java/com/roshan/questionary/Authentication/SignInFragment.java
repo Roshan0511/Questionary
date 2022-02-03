@@ -1,28 +1,40 @@
 package com.roshan.questionary.Authentication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.roshan.questionary.Activities.MainActivity;
-import com.roshan.questionary.databinding.ActivitySignInBinding;
+import com.roshan.questionary.R;
+import com.roshan.questionary.databinding.FragmentSignInBinding;
 
-public class SignIn extends AppCompatActivity {
+public class SignInFragment extends Fragment {
 
-    ActivitySignInBinding binding;
+    FragmentSignInBinding binding;
     FirebaseAuth auth;
 
+    public SignInFragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivitySignInBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        binding = FragmentSignInBinding.inflate(inflater, container, false);
 
         auth = FirebaseAuth.getInstance();
+
 
         userLoginStatus();
 
@@ -31,9 +43,25 @@ public class SignIn extends AppCompatActivity {
         });
 
         binding.signUpLogIn.setOnClickListener(v -> {
-            Intent intent = new Intent(SignIn.this, SignUp.class);
-            startActivity(intent);
+            addFragment(new SignUpFragment(),true,"SignUp");
         });
+
+
+        return binding.getRoot();
+    }
+
+
+
+    public void addFragment(Fragment fragment, boolean addToBackStack, String tag) {
+        FragmentManager manager = getFragmentManager();
+        assert manager != null;
+        FragmentTransaction ft = manager.beginTransaction();
+
+        if (addToBackStack) {
+            ft.addToBackStack(tag);
+        }
+        ft.replace(R.id.frame_login_container, fragment, tag);
+        ft.commitAllowingStateLoss();
     }
 
 
@@ -69,13 +97,13 @@ public class SignIn extends AppCompatActivity {
 
                     binding.progressBar4.setVisibility(View.GONE);
 
-                    Toast.makeText(SignIn.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SignIn.this, MainActivity.class);
+                    Toast.makeText(requireContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
-                    finish();
+                    requireActivity().finish();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(SignIn.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     binding.progressBar4.setVisibility(View.GONE);
                 });
     }
@@ -86,9 +114,9 @@ public class SignIn extends AppCompatActivity {
 
     private void userLoginStatus(){
         if (auth.getCurrentUser() != null){
-            Intent intent = new Intent(SignIn.this, MainActivity.class);
+            Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
-            finish();
+            requireActivity().finish();
         }
     }
 }

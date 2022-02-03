@@ -16,6 +16,8 @@ import com.roshan.questionary.Fragments.HomeFragment;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.ExitApplicationDialogBinding;
 
+import java.util.Objects;
+
 public class ExitAppDialog extends DialogFragment {
     ExitApplicationDialogBinding binding;
 
@@ -23,7 +25,7 @@ public class ExitAppDialog extends DialogFragment {
     public void onStart() {
         super.onStart();
 
-        if (getDialog().getWindow() != null){
+        if (Objects.requireNonNull(getDialog()).getWindow() != null){
             getDialog().getWindow().setLayout(
                     WindowManager.LayoutParams.MATCH_PARENT,
                     WindowManager.LayoutParams.WRAP_CONTENT

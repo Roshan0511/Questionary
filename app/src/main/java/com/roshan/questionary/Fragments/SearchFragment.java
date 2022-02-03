@@ -69,6 +69,8 @@ public class SearchFragment extends Fragment {
                         if (snapshot.exists()){
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                                 UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                                assert userModel != null;
+                                userModel.setUserId(dataSnapshot.getKey());
                                 list.add(userModel);
                             }
                             adapter.notifyDataSetChanged();

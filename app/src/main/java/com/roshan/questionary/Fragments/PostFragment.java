@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.roshan.questionary.Activities.MainActivity;
+import com.roshan.questionary.Dialogs.ShowingProfileDialog;
 import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
@@ -95,6 +97,13 @@ public class PostFragment extends Fragment {
             intent.setAction(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
             startActivityForResult(intent, 11);
+        });
+
+
+        binding.profilePicPost.setOnClickListener(v -> {
+            ShowingProfileDialog dialog = new ShowingProfileDialog(auth.getUid());
+            dialog.show(((FragmentActivity)requireContext()).getSupportFragmentManager(), dialog.getTag());
+            dialog.setCancelable(false);
         });
 
 

@@ -69,22 +69,25 @@
                     android:id="@+id/profile_image"
                     android:layout_width="62dp"
                     android:layout_height="62dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"
                     android:src="@drawable/placeholder"
                     app:civ_border_color="@color/grey"
                     app:civ_border_width="1dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
                     app:layout_constraintStart_toStartOf="@id/view"
-                    app:layout_constraintTop_toTopOf="@id/view" />
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout3" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
                     android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/profile_image"
-                    app:layout_constraintTop_toTopOf="@+id/profile_image">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/userNameProfile"
@@ -108,33 +111,54 @@
                         app:layout_constraintBottom_toBottomOf="@+id/profile_image_rv"
                         app:layout_constraintStart_toStartOf="@+id/userNameProfile" />
 
+                    <TextView
+                        android:id="@+id/summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:fontFamily="serif"
+                        android:textSize="15sp"
+                        android:visibility="gone" />
+
                 </LinearLayout>
 
                 <View
+                    android:id="@+id/line"
                     android:layout_width="wrap_content"
                     android:layout_height="0.5dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginBottom="2dp"
                     android:background="@color/grey"
-                    app:layout_constraintBottom_toTopOf="@+id/changeProfile"
                     app:layout_constraintEnd_toEndOf="@id/view"
                     app:layout_constraintStart_toStartOf="@id/view"
-                    app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
                 <TextView
                     android:id="@+id/changeProfile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="10dp"
                     android:text="@string/change_profile"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/appColor"
                     app:layout_constraintBottom_toBottomOf="@id/view"
                     app:layout_constraintEnd_toEndOf="@id/view"
                     app:layout_constraintStart_toStartOf="@id/view"
-                    app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+                    app:layout_constraintTop_toBottomOf="@+id/line" />
+
+                <ImageView
+                    android:id="@+id/editSummaryBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="3dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_baseline_edit_24"
+                    app:tint="@color/appColor" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

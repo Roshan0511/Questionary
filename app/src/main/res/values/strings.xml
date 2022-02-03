@@ -51,4 +51,16 @@
     <string name="update">Update</string>
     <string name="edit_question">Edit Question</string>
     <string name="exit">Exit</string>
+    <string name="save">Save</string>
+    <string name="summary">Summary</string>
+    <string name="add_bio">Add Bio</string>
+    <string name="bio">Bio</string>
+    <string name="hey_welcome">Hey! Welcome</string>
+    <string name="get_started">Get Started</string>
+    <string name="log_in">Log IN</string>
+    <string name="sign_in">Sign In</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="new_user_sign_up">New User? Sign Up</string>
+    <string name="sign_in_here">Sign In here..</string>
+    <string name="hello_admin">Hello Admin!</string>
 </resources>

@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.roshan.questionary.Dialogs.ShowingProfileDialog;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.SearchRvViewBinding;
@@ -44,6 +46,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.viewHolder
                 .load(userModel.getProfilePic())
                 .placeholder(R.drawable.placeholder)
                 .into(holder.binding.profilePicSearch);
+
+        holder.binding.profilePicSearch.setOnClickListener(v -> {
+            ShowingProfileDialog dialog = new ShowingProfileDialog(userModel.getUserId());
+            dialog.show(((FragmentActivity)context).getSupportFragmentManager(), dialog.getTag());
+            dialog.setCancelable(false);
+        });
     }
 
     @Override

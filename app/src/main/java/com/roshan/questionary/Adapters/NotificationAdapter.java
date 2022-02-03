@@ -70,11 +70,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
                         if (model.getType().equals("like")){
                             holder.binding.titleNotification.setText(Html.fromHtml("<b>" + userModel.getName() + "</b>" +
-                                    " liked your post."));
+                                    " liked your question."));
                         }
                         else if (model.getType().equals("comment")){
                             holder.binding.titleNotification.setText(Html.fromHtml("<b>" + userModel.getName() + "</b>" +
-                                    " commented on your post."));
+                                    " commented on your question."));
                         }
                     }
 
@@ -85,19 +85,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 });
 
 
-//        holder.binding.notificationItem.setOnClickListener(v -> {
-//            Intent intent = new Intent(context, CommentActivity.class);
-//            intent.putExtra("postId", model.getPostID());
-//            intent.putExtra("userId", model.getPostedBY());
-//            context.startActivity(intent);
-//        });
+        holder.binding.notificationItem.setOnClickListener(v -> {
+            Intent intent = new Intent(context, CommentActivity.class);
+            intent.putExtra("postId", model.getPostID());
+            intent.putExtra("userId", model.getPostedBY());
+            context.startActivity(intent);
+        });
 
-        holder.binding.notificationItem.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(context, "Notification Clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            }
+
+        holder.binding.notificationItem.setOnLongClickListener(v -> {
+            Toast.makeText(context, "Single click for viewing question", Toast.LENGTH_SHORT).show();
+            return true;
         });
     }
 

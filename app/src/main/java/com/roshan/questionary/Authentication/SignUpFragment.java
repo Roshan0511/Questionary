@@ -1,29 +1,40 @@
 package com.roshan.questionary.Authentication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.roshan.questionary.Activities.MainActivity;
 import com.roshan.questionary.Models.UserModel;
-import com.roshan.questionary.databinding.ActivitySignUpBinding;
+import com.roshan.questionary.R;
+import com.roshan.questionary.databinding.FragmentSignUpBinding;
 
-public class SignUp extends AppCompatActivity {
+public class SignUpFragment extends Fragment {
 
-    ActivitySignUpBinding binding;
+    FragmentSignUpBinding binding;
     FirebaseAuth auth;
     FirebaseDatabase database;
 
+    public SignUpFragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivitySignUpBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        binding = FragmentSignUpBinding.inflate(inflater, container, false);
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -33,11 +44,23 @@ public class SignUp extends AppCompatActivity {
         });
 
         binding.signUpLogIn.setOnClickListener(v -> {
-            Intent intent = new Intent(SignUp.this, SignIn.class);
-            startActivity(intent);
-            finish();
+            addFragment(new SignInFragment(),true,"SignIn");
         });
 
+        return binding.getRoot();
+    }
+
+
+    public void addFragment(Fragment fragment, boolean addToBackStack, String tag) {
+        FragmentManager manager = getFragmentManager();
+        assert manager != null;
+        FragmentTransaction ft = manager.beginTransaction();
+
+        if (addToBackStack) {
+            ft.addToBackStack(tag);
+        }
+        ft.replace(R.id.frame_login_container, fragment, tag);
+        ft.commitAllowingStateLoss();
     }
 
 
@@ -77,7 +100,7 @@ public class SignUp extends AppCompatActivity {
         auth.createUserWithEmailAndPassword(binding.emailSignUp.getEditText().getText().toString(),
                 binding.passwordSignUp.getEditText().getText().toString())
                 .addOnSuccessListener(authResult -> {
-                    Toast.makeText(SignUp.this, "Register Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Register Successfully", Toast.LENGTH_SHORT).show();
 
                     UserModel user = new UserModel(binding.userNameSignup.getEditText().getText().toString(),
                             binding.emailSignUp.getEditText().getText().toString(),
@@ -87,12 +110,12 @@ public class SignUp extends AppCompatActivity {
 
                     binding.progressBar5.setVisibility(View.GONE);
 
-                    Intent intent = new Intent(SignUp.this, MainActivity.class);
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
-                    finish();
+                    requireActivity().finish();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(SignUp.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     binding.progressBar5.setVisibility(View.GONE);
                 });
     }

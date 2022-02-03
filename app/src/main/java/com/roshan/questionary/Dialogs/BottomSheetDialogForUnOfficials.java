@@ -4,9 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,24 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.EntityUtils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.databinding.BottomSheetHomeUnofficialsBinding;
-
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 
 public class BottomSheetDialogForUnOfficials extends BottomSheetDialogFragment {
 
@@ -71,24 +57,21 @@ public class BottomSheetDialogForUnOfficials extends BottomSheetDialogFragment {
             intent2.putExtra(Intent.EXTRA_TEXT, "Here your Question " + url);
             startActivity(Intent.createChooser(intent2, "Share via"));
 
-//            try {
-//                URL imageUrl = new URL(url);
-//                Bitmap image = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
-//                Intent intent = new Intent(Intent.ACTION_SEND);
-//                intent.setType("image/png");
-//                intent.putExtra(Intent.EXTRA_STREAM, image);
-//                startActivity(Intent.createChooser(intent , "Share"));
-//            } catch(IOException e) {
-//                System.out.println(e);
-//            }
             dismiss();
 
         });
 
 
         binding.downloadPostHome.setOnClickListener(v -> {
-            downloadFile(url);
-            Toast.makeText(context, "Downloading....", Toast.LENGTH_LONG).show();
+
+            if (url.isEmpty()){
+                Toast.makeText(context, "Image Not Available", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                downloadFile(url);
+                Toast.makeText(context, "Downloading....", Toast.LENGTH_LONG).show();
+            }
+
             dismiss();
         });
 
@@ -101,8 +84,11 @@ public class BottomSheetDialogForUnOfficials extends BottomSheetDialogFragment {
                 .child(postId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                PostModel model = snapshot.getValue(PostModel.class);
-                url = model.getQuestionImage();
+                if (snapshot.exists()){
+                    PostModel model = snapshot.getValue(PostModel.class);
+                    assert model != null;
+                    url = model.getQuestionImage();
+                }
             }
 
             @Override

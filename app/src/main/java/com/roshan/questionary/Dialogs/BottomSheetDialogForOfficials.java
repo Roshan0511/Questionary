@@ -82,8 +82,14 @@ public class BottomSheetDialogForOfficials extends BottomSheetDialogFragment {
 
 
         binding.downloadPostHome.setOnClickListener(v -> {
-            downloadFile(url);
-            Toast.makeText(context, "Downloading....", Toast.LENGTH_LONG).show();
+
+            if (url.isEmpty()){
+                Toast.makeText(context, "Image Not Available", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                downloadFile(url);
+                Toast.makeText(context, "Downloading....", Toast.LENGTH_LONG).show();
+            }
 
             dismiss();
         });

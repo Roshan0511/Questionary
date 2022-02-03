@@ -91,7 +91,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
                 assert post != null;
 
                 if (context!=null){
-                    Glide.with(context)
+                    Glide.with(context.getApplicationContext())
                             .load(post.getProfilePic())
                             .placeholder(R.drawable.placeholder)
                             .into(holder.binding.profileImageRv);

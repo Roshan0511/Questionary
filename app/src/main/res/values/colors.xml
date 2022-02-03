@@ -15,6 +15,8 @@
     <color name="red">#F44336</color>
     <color name="light_blue">#FF80AB</color>
 
+    <color name="light_grey">#EEEEEE</color>
+
 
     <color name="transparent">#00000000</color>
 </resources>

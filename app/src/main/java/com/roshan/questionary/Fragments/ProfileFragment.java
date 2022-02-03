@@ -8,9 +8,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.roshan.questionary.Activities.MainActivity;
-import com.roshan.questionary.Authentication.SignIn;
+import com.roshan.questionary.Authentication.LoginActivity;
+import com.roshan.questionary.Dialogs.AddPassionDialog;
+import com.roshan.questionary.Dialogs.ShowingProfileDialog;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.FragmentProfileBinding;
@@ -60,6 +61,12 @@ public class ProfileFragment extends Fragment {
 
         //Click Event ------------------------>
 
+        binding.profileImage.setOnClickListener(v -> {
+            ShowingProfileDialog dialog = new ShowingProfileDialog(auth.getUid());
+            dialog.show(((FragmentActivity)requireContext()).getSupportFragmentManager(), dialog.getTag());
+            dialog.setCancelable(false);
+        });
+
         binding.changeProfile.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -68,7 +75,7 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.logout.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), SignIn.class);
+            Intent intent = new Intent(getContext(), LoginActivity.class);
             auth.signOut();
             startActivity(intent);
             requireActivity().finish();
@@ -88,6 +95,12 @@ public class ProfileFragment extends Fragment {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.linearLayout, fragment);
             transaction.commit();
+        });
+
+        binding.editSummaryBtn.setOnClickListener(v -> {
+            AddPassionDialog dialog = new AddPassionDialog();
+            dialog.show(((FragmentActivity) requireContext()).getSupportFragmentManager(), dialog.getTag());
+            dialog.setCancelable(false);
         });
 
         return binding.getRoot();
@@ -130,7 +143,7 @@ public class ProfileFragment extends Fragment {
 
     //Setting Image and Name when this fragment is open ---------------------->
 
-    private void setDataInFragment(){
+    public void setDataInFragment(){
         binding.progressBar.setVisibility(View.VISIBLE);
 
         database.getReference().child("Users").child(Objects.requireNonNull(auth.getUid()))
@@ -151,6 +164,14 @@ public class ProfileFragment extends Fragment {
                             binding.userNameProfile.setText(user.getName());
 
                             binding.userEmail.setText(user.getEmail());
+
+                            if (user.getSummary() == null){
+                                binding.summary.setVisibility(View.GONE);
+                            }
+                            else {
+                                binding.summary.setText(user.getSummary());
+                                binding.summary.setVisibility(View.VISIBLE);
+                            }
                         }
                         binding.progressBar.setVisibility(View.GONE);
                     }
