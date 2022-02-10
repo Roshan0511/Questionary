@@ -1,9 +1,11 @@
 package com.roshan.questionary.Dialogs;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -69,7 +73,6 @@ public class BottomSheetDialogForUnOfficials extends BottomSheetDialogFragment {
             }
             else{
                 downloadFile(url);
-                Toast.makeText(context, "Downloading....", Toast.LENGTH_LONG).show();
             }
 
             dismiss();
@@ -102,20 +105,29 @@ public class BottomSheetDialogForUnOfficials extends BottomSheetDialogFragment {
     // Download Image ---------------------------->
 
     private void downloadFile(String url) {
-        try {
-            DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-            Uri uri = Uri.parse(url);
 
-            DownloadManager.Request request = new DownloadManager.Request(uri);
-            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI)
-                    .setAllowedOverRoaming(false)
-                    .setTitle("Questionary")
-                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, File.separator + "Questionary" + ".jpg");
+        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
-            manager.enqueue(request);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            try {
+                DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                Uri uri = Uri.parse(url);
+
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI)
+                        .setAllowedOverRoaming(false)
+                        .setTitle("Questionary")
+                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                        .setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, File.separator + "Questionary" + ".jpg");
+
+                manager.enqueue(request);
+
+                Toast.makeText(context, "Downloading....", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
     }
 }

@@ -72,10 +72,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
                         assert user != null;
                         holder.binding.nameRvForList.setText(user.getName());
 
-                        Glide.with(context)
-                                .load(user.getProfilePic())
-                                .placeholder(R.drawable.placeholder)
-                                .into(holder.binding.profilePicRvForList);
+                        if (context != null){
+                            Glide.with(context.getApplicationContext())
+                                    .load(user.getProfilePic())
+                                    .placeholder(R.drawable.placeholder)
+                                    .into(holder.binding.profilePicRvForList);
+                        }
                     }
 
                     @Override

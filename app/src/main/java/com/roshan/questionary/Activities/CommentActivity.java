@@ -129,10 +129,12 @@ public class CommentActivity extends AppCompatActivity {
                     UserModel userModel = snapshot.getValue(UserModel.class);
                     assert userModel != null;
 
-                    Glide.with(CommentActivity.this)
-                            .load(userModel.getProfilePic())
-                            .placeholder(R.drawable.placeholder)
-                            .into(binding.profileImagePostCommentAc);
+                    if(getApplicationContext() != null){
+                        Glide.with(getApplicationContext())
+                                .load(userModel.getProfilePic())
+                                .placeholder(R.drawable.placeholder)
+                                .into(binding.profileImagePostCommentAc);
+                    }
 
                     binding.namePostCommentAc.setText(userModel.getName());
 

@@ -63,4 +63,11 @@
     <string name="new_user_sign_up">New User? Sign Up</string>
     <string name="sign_in_here">Sign In here..</string>
     <string name="hello_admin">Hello Admin!</string>
+    <string name="discover_people">Discover People</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="top_recommendations">Top Recommendations</string>
+    <string name="are_you_sure_want_to_log_out">Are you sure want to Log Out</string>
+    <string name="specialist_in">Specialist In</string>
+    <string name="add_specialization">Add Specialization</string>
+    <string name="are_you_sure_want_to_exit_this_app">Are you sure want to exit this App?</string>
 </resources>

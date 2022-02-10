@@ -63,23 +63,24 @@ public class MyQuestionsFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void setDataForPostAdapter(){
+    private void setDataForPostAdapter() {
         binding.progressBar6.setVisibility(View.VISIBLE);
         database.getReference().child("posts").addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
+            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
-                if (snapshot.exists()){
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         PostModel post = dataSnapshot.getValue(PostModel.class);
                         assert post != null;
                         post.setPostId(dataSnapshot.getKey());
-                        if (post.getUserId().equals(auth.getUid())){
+                        if (post.getUserId().equals(auth.getUid())) {
                             list.add(post);
                         }
                     }
                 }
+                binding.count.setText(list.size() + "");
                 adapter.notifyDataSetChanged();
                 binding.progressBar6.setVisibility(View.GONE);
             }
@@ -91,7 +92,7 @@ public class MyQuestionsFragment extends Fragment {
         });
     }
 
-    private void pressBackButton(){
+    private void pressBackButton() {
         ProfileFragment fragment = new ProfileFragment();
         assert getFragmentManager() != null;
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -107,7 +108,7 @@ public class MyQuestionsFragment extends Fragment {
         requireView().setFocusableInTouchMode(true);
         requireView().requestFocus();
         requireView().setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+            if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                 pressBackButton();
                 return true;
             }

@@ -6,7 +6,7 @@ public class NotificationModel {
     private String type;
     private String postID;
     private String postedBY;
-    private Boolean checkOpen;
+    private boolean checkOpen;
     private String notificationId;
 
     public NotificationModel() {

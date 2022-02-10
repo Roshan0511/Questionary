@@ -51,6 +51,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull NotificationAdapter.viewHolder holder, int position) {
         NotificationModel model = list.get(position);
 
+        if (model.getCheckOpen().equals(true)){
+            holder.binding.notificationItem.setBackgroundResource(R.color.white);
+        }
+
         holder.binding.dateRvNotification.setText(new SimpleDateFormat("d MMM, h:mm aaa")
                 .format(new Date(Long.parseLong(model.getNotificationAt()+""))));
 
@@ -86,16 +90,18 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 
         holder.binding.notificationItem.setOnClickListener(v -> {
+
+            database.getReference().child("notification")
+                    .child(model.getPostedBY())
+                    .child(model.getNotificationId())
+                    .child("checkOpen")
+                    .setValue(true);
+
+
             Intent intent = new Intent(context, CommentActivity.class);
             intent.putExtra("postId", model.getPostID());
             intent.putExtra("userId", model.getPostedBY());
             context.startActivity(intent);
-        });
-
-
-        holder.binding.notificationItem.setOnLongClickListener(v -> {
-            Toast.makeText(context, "Single click for viewing question", Toast.LENGTH_SHORT).show();
-            return true;
         });
     }
 

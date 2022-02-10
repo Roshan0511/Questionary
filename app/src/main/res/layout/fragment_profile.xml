@@ -107,7 +107,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textSize="14sp"
+                        android:textSize="14.4sp"
                         app:layout_constraintBottom_toBottomOf="@+id/profile_image_rv"
                         app:layout_constraintStart_toStartOf="@+id/userNameProfile" />
 
@@ -115,7 +115,7 @@
                         android:id="@+id/summary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="5dp"
                         android:fontFamily="serif"
                         android:textSize="15sp"
                         android:visibility="gone" />
@@ -259,6 +259,7 @@
             style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:elevation="10dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

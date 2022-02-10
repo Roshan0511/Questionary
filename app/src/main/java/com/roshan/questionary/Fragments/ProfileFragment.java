@@ -27,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.roshan.questionary.Authentication.LoginActivity;
 import com.roshan.questionary.Dialogs.AddPassionDialog;
+import com.roshan.questionary.Dialogs.LogOutDialog;
 import com.roshan.questionary.Dialogs.ShowingProfileDialog;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
@@ -75,10 +76,9 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.logout.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), LoginActivity.class);
-            auth.signOut();
-            startActivity(intent);
-            requireActivity().finish();
+            LogOutDialog dialog = new LogOutDialog();
+            dialog.show(((FragmentActivity)requireContext()).getSupportFragmentManager(), dialog.getTag());
+            dialog.setCancelable(false);
         });
 
         binding.myQuestionTxt.setOnClickListener(v -> {
@@ -90,7 +90,7 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.recommendation.setOnClickListener(v -> {
-            Fragment fragment = new SearchFragment();
+            Fragment fragment = new RecommendationFragment();
             assert getFragmentManager() != null;
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.linearLayout, fragment);
@@ -156,10 +156,12 @@ public class ProfileFragment extends Fragment {
 
                             assert user != null;
 
-                            Glide.with(requireActivity())
-                                    .load(user.getProfilePic())
-                                    .placeholder(R.drawable.placeholder)
-                                    .into(binding.profileImage);
+                            if (getContext() != null){
+                                Glide.with(requireActivity())
+                                        .load(user.getProfilePic())
+                                        .placeholder(R.drawable.placeholder)
+                                        .into(binding.profileImage);
+                            }
 
                             binding.userNameProfile.setText(user.getName());
 

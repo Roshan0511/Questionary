@@ -72,10 +72,12 @@ public class PostFragment extends Fragment {
                     UserModel userModel = snapshot.getValue(UserModel.class);
                     assert userModel != null;
 
-                    Glide.with(requireActivity())
-                            .load(userModel.getProfilePic())
-                            .placeholder(R.drawable.placeholder)
-                            .into(binding.profilePicPost);
+                    if (getContext() != null){
+                        Glide.with(requireActivity())
+                                .load(userModel.getProfilePic())
+                                .placeholder(R.drawable.placeholder)
+                                .into(binding.profilePicPost);
+                    }
 
                     binding.userNamePost.setText(userModel.getName());
                     binding.progressBar.setVisibility(View.GONE);
