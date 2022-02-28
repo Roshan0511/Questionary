@@ -23,4 +23,10 @@
     <style name="Theme.Questionary.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Questionary.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="DialogAnimation" >
+        <item name="android:windowEnterAnimation">@anim/anim_down</item>
+        <item name="android:windowExitAnimation">@anim/anim_up</item>
+    </style>
 </resources>

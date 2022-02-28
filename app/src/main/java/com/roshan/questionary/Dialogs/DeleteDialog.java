@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import com.google.firebase.database.FirebaseDatabase;
-import com.roshan.questionary.Adapters.PostAdapter;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.ConfirmationBeforeDeletingBinding;
 
@@ -43,6 +42,7 @@ public class DeleteDialog extends DialogFragment {
             );
             getDialog().getWindow().setGravity(Gravity.CENTER);
             getDialog().getWindow().setBackgroundDrawableResource(R.color.transparent);
+            getDialog().getWindow().setWindowAnimations(R.style.DialogAnimation);
         }
     }
 
@@ -54,8 +54,8 @@ public class DeleteDialog extends DialogFragment {
 
         binding.cancelBtn.setOnClickListener(v -> dismiss());
         binding.deleteBtn.setOnClickListener(v -> {
-            PostAdapter postAdapter = new PostAdapter();
-            postAdapter.deleteData(postId);
+//            PostAdapter postAdapter = new PostAdapter();
+//            postAdapter.deleteData(postId);
 
             dismiss();
         });

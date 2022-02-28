@@ -21,10 +21,7 @@ import com.roshan.questionary.Dialogs.DeleteCommentDialog;
 import com.roshan.questionary.Models.CommentModel;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
-import com.roshan.questionary.databinding.CommentRvViewBinding;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.roshan.questionary.databinding.CommentsRvViewBinding;
 import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHolder> {
@@ -33,12 +30,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
     List<CommentModel> list;
     String postId;
     FirebaseDatabase database;
+    FirebaseAuth auth;
 
     public CommentAdapter(Context context, List<CommentModel> list, String postId) {
         this.context = context;
         this.list = list;
         this.postId = postId;
         database = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
     }
 
     public CommentAdapter() {
@@ -48,7 +47,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.comment_rv_view, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.comments_rv_view, parent, false);
         return new viewHolder(view);
     }
 
@@ -57,9 +56,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         CommentModel model = list.get(position);
 
-        holder.binding.commentRvForList.setText(model.getCommentText());
-        holder.binding.dateRvForList.setText(new SimpleDateFormat("d MMM, h:mm aaa")
-                .format(new Date(Long.parseLong(model.getCommentedAt()+""))));
+        holder.binding.answer.setText(model.getCommentText());
+        holder.binding.steps.setVisibility(View.GONE);
+        holder.binding.stepsTxt.setVisibility(View.GONE);
+//        holder.binding.dateRvForList.setText(new SimpleDateFormat("d MMM, h:mm aaa")
+//                .format(new Date(Long.parseLong(model.getCommentedAt()+""))));
 
         database.getReference()
                 .child("Users")
@@ -70,13 +71,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
                         UserModel user = snapshot.getValue(UserModel.class);
 
                         assert user != null;
-                        holder.binding.nameRvForList.setText(user.getName());
+                        holder.binding.name.setText(user.getName());
 
                         if (context != null){
                             Glide.with(context.getApplicationContext())
                                     .load(user.getProfilePic())
                                     .placeholder(R.drawable.placeholder)
-                                    .into(holder.binding.profilePicRvForList);
+                                    .into(holder.binding.profileImagePostCommentAc);
                         }
                     }
 
@@ -87,7 +88,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
                 });
 
 
-        holder.binding.cardView2.setOnLongClickListener(v -> {
+        holder.binding.commentItem.setOnLongClickListener(v -> {
             if (model.getCommentedBy().equals(FirebaseAuth.getInstance().getUid())){
 
                 DeleteCommentDialog dialog = new DeleteCommentDialog(postId, model.getCommentId());
@@ -110,10 +111,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
 
 
     public static class viewHolder extends RecyclerView.ViewHolder{
-        CommentRvViewBinding binding;
+        CommentsRvViewBinding binding;
         public viewHolder(@NonNull View itemView) {
             super(itemView);
-            binding = CommentRvViewBinding.bind(itemView);
+            binding = CommentsRvViewBinding.bind(itemView);
         }
     }
 
@@ -125,32 +126,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
                 .child("comments")
                 .child(commentId)
                 .removeValue();
-
-
-
-        database.getReference()
-                .child("posts")
-                .child(postId)
-                .child("commentCount")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int commentsCount = 0;
-                if (snapshot.exists()){
-                    commentsCount = snapshot.getValue(Integer.class);
-                }
-                database.getReference()
-                        .child("posts")
-                        .child(postId)
-                        .child("commentCount")
-                        .setValue(commentsCount - 1);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(context, "Error : " + error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
 
         notifyDataSetChanged();
     }

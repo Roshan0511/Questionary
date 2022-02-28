@@ -34,28 +34,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:fontFamily="serif"
                 android:gravity="center_horizontal"
                 android:text=""
-                android:fontFamily="serif"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="17.5sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profilePicSearch" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/addFriend"
+            <View
+                android:id="@+id/view"
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/button_bg"
-                android:text="@string/add_friend"
-                android:textColor="@color/white"
-                android:textSize="15sp"
+                android:layout_height="0.5dp"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toTopOf="@+id/ll"
+                app:layout_constraintTop_toBottomOf="@+id/name" />
+
+            <LinearLayout
+                android:id="@+id/ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/name" />
+                app:layout_constraintTop_toBottomOf="@+id/name">
+
+                <ImageView
+                    android:id="@+id/thumbsUp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_baseline_thumb_up_24" />
+
+                <ImageView
+                    android:id="@+id/thumbsDown"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_baseline_thumb_down_24" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

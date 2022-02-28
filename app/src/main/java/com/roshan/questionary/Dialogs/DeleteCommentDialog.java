@@ -42,6 +42,7 @@ public class DeleteCommentDialog extends DialogFragment {
             );
             getDialog().getWindow().setGravity(Gravity.CENTER);
             getDialog().getWindow().setBackgroundDrawableResource(R.color.transparent);
+            getDialog().getWindow().setWindowAnimations(R.style.DialogAnimation);
         }
     }
 

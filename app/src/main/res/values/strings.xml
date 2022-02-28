@@ -70,4 +70,11 @@
     <string name="specialist_in">Specialist In</string>
     <string name="add_specialization">Add Specialization</string>
     <string name="are_you_sure_want_to_exit_this_app">Are you sure want to exit this App?</string>
+    <string name="lend_a_hand_to_other_students_and_get_sharing_your_knowledge">Lend a hand to other students and get sharing your knowledge</string>
+    <string name="_0">0</string>
+    <string name="give_answer">Give Answer</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="scan_text">Scan Text</string>
+    <string name="upload">Upload</string>
+    <string name="tap_and_ask_it_out_loud">Tap and ask it out loud</string>
 </resources>

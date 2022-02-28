@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment
 import com.google.firebase.auth.FirebaseAuth
-import com.roshan.questionary.Activities.MainActivity
 import com.roshan.questionary.Authentication.LoginActivity
 import com.roshan.questionary.R
 import com.roshan.questionary.databinding.LogoutDialogBinding
@@ -25,6 +24,7 @@ class LogOutDialog : DialogFragment() {
 
             dialog!!.window!!.setGravity(Gravity.CENTER)
             dialog!!.window!!.setBackgroundDrawableResource(R.color.transparent)
+            dialog!!.window!!.setWindowAnimations(R.style.DialogAnimation)
         }
     }
 

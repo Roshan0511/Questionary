@@ -59,26 +59,18 @@ public class CommentActivity extends AppCompatActivity {
 
         setDataInCommentActivity();
 
-        binding.sendCommentBtn.setOnClickListener(v -> {
-            binding.sendCommentBtn.setClickable(false);
-            if (binding.commentsET.getText().toString().trim().equals("")){
-                binding.commentsET.setError("Field must not be empty!");
-                binding.sendCommentBtn.setClickable(true);
-            }
-            else {
-                setCommentData();
-            }
+        binding.commentsET.setOnClickListener(v -> {
+
         });
 
-        binding.optionMenuCommentAc.setOnClickListener(v -> {
-            BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetDialogForUnOfficials(CommentActivity.this
-                    , postId, userId);
-            bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
-        });
+//        binding.optionMenuCommentAc.setOnClickListener(v -> {
+//            BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetDialogForUnOfficials(CommentActivity.this
+//                    , postId, userId);
+//            bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+//        });
 
         adapter = new CommentAdapter(CommentActivity.this, list, postId);
         binding.rvComment.setAdapter(adapter);
-        binding.rvComment.addItemDecoration(new DividerItemDecoration(CommentActivity.this, DividerItemDecoration.VERTICAL));
         binding.rvComment.setLayoutManager(new LinearLayoutManager(this));
 
         database.getReference()
@@ -110,7 +102,7 @@ public class CommentActivity extends AppCompatActivity {
 
         binding.backBtn.setOnClickListener(v -> back());
 
-        binding.questionImgCommentAc.setOnClickListener(v -> {
+        binding.questionImg.setOnClickListener(v -> {
             ShowingImageDialog dialog = new ShowingImageDialog(postId);
             dialog.show(getSupportFragmentManager(), dialog.getTag());
             dialog.setCancelable(false);
@@ -136,9 +128,8 @@ public class CommentActivity extends AppCompatActivity {
                                 .into(binding.profileImagePostCommentAc);
                     }
 
-                    binding.namePostCommentAc.setText(userModel.getName());
+                    binding.name.setText(userModel.getName());
 
-                    binding.commentPageTitle.setText(userModel.getName()+ "'s Question");
                 }
             }
 
@@ -156,81 +147,73 @@ public class CommentActivity extends AppCompatActivity {
                     PostModel post = snapshot.getValue(PostModel.class);
                     assert post != null;
 
-                    binding.questionTextCommentAc.setText(post.getQuestionTxt());
-                    binding.commentsCommentAc.setText(post.getCommentCount() + "");
+                    binding.questionTxt.setText(post.getQuestionTxt());
 
                     if (!post.getQuestionImage().isEmpty()){
-                        binding.questionImgCommentAc.setVisibility(View.VISIBLE);
+                        binding.questionImg.setVisibility(View.VISIBLE);
 
                         Glide.with(getApplicationContext())
                                 .load(post.getQuestionImage())
                                 .placeholder(R.drawable.placeholder)
-                                .into(binding.questionImgCommentAc);
+                                .into(binding.questionImg);
                     }
                     else {
-                        binding.questionImgCommentAc.setVisibility(View.GONE);
+                        binding.questionImg.setVisibility(View.GONE);
                     }
-
-                    binding.likeCommentAc.setText(post.getLikeCount() + "");
-
-                    binding.datePostCommentAc.setText(new SimpleDateFormat("d MMM, h:mm aaa")
-                        .format(new Date(Long.parseLong(post.getTime()+""))));
-
-
 
                     // Setting Like Features -------------------------->
 
-                    database.getReference().child("posts")
-                            .child(postId)
-                            .child("likes")
-                            .child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (snapshot.exists()){
-                                        binding.likeCommentAc.setCompoundDrawablesWithIntrinsicBounds
-                                                (R.drawable.like, 0, 0, 0);
-                                    }
-                                    else {
-                                        binding.likeCommentAc.setOnClickListener(v ->
-                                                database.getReference().child("posts")
-                                                .child(postId)
-                                                .child("likes")
-                                                .child(FirebaseAuth.getInstance().getUid())
-                                                .setValue(true)
-                                                .addOnSuccessListener(unused -> database.getReference().child("posts")
-                                                        .child(postId)
-                                                        .child("likeCount")
-                                                        .setValue(post.getLikeCount() + 1)
-                                                        .addOnSuccessListener(unused1 -> {
-                                                            binding.likeCommentAc
-                                                                    .setCompoundDrawablesWithIntrinsicBounds
-                                                                            (R.drawable.like, 0, 0, 0);
-
-                                                            if (!userId.equals(FirebaseAuth.getInstance().getUid())){
-                                                                NotificationModel notification = new NotificationModel();
-                                                                notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
-                                                                notification.setNotificationAt(new Date().getTime());
-                                                                notification.setPostID(postId);
-                                                                notification.setPostedBY(userId);
-                                                                notification.setType("like");
-
-                                                                database.getReference()
-                                                                        .child("notification")
-                                                                        .child(userId)
-                                                                        .push()
-                                                                        .setValue(notification);
-                                                            }
-
-                                                        })));
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    Toast.makeText(CommentActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            });
+//                    database.getReference().child("posts")
+//                            .child(postId)
+//                            .child("likes")
+//                            .child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+//                            .addListenerForSingleValueEvent(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                    if (snapshot.exists()){
+//                                        binding.likeCommentAc.setCompoundDrawablesWithIntrinsicBounds
+//                                                (R.drawable.like, 0, 0, 0);
+//                                    }
+//                                    else {
+//                                        binding.likeCommentAc.setOnClickListener(v ->
+//                                                database.getReference().child("posts")
+//                                                .child(postId)
+//                                                .child("likes")
+//                                                .child(FirebaseAuth.getInstance().getUid())
+//                                                .setValue(true)
+//                                                .addOnSuccessListener(unused -> database.getReference().child("posts")
+//                                                        .child(postId)
+//                                                        .child("likeCount")
+//                                                        .setValue(post.getLikeCount() + 1)
+//                                                        .addOnSuccessListener(unused1 -> {
+//                                                            binding.likeCommentAc
+//                                                                    .setCompoundDrawablesWithIntrinsicBounds
+//                                                                            (R.drawable.like, 0, 0, 0);
+//
+//                                                            if (!userId.equals(FirebaseAuth.getInstance().getUid())){
+//                                                                NotificationModel notification = new NotificationModel();
+//                                                                notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
+//                                                                notification.setNotificationAt(new Date().getTime());
+//                                                                notification.setPostID(postId);
+//                                                                notification.setPostedBY(userId);
+//                                                                notification.setType("like");
+//
+//                                                                database.getReference()
+//                                                                        .child("notification")
+//                                                                        .child(userId)
+//                                                                        .push()
+//                                                                        .setValue(notification);
+//                                                            }
+//
+//                                                        })));
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(@NonNull DatabaseError error) {
+//                                    Toast.makeText(CommentActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+//                                }
+//                            });
                 }
             }
 
@@ -245,64 +228,64 @@ public class CommentActivity extends AppCompatActivity {
 
     // Setting Comment Features ------------------------------->
 
-    private void setCommentData(){
-        CommentModel comment = new CommentModel();
-        comment.setCommentText(binding.commentsET.getText().toString());
-        comment.setCommentedBy(auth.getUid());
-        comment.setCommentedAt(new Date().getTime());
-
-        database.getReference()
-                .child("posts")
-                .child(postId)
-                .child("comments")
-                .push()
-                .setValue(comment)
-                .addOnSuccessListener(unused ->
-                        database.getReference()
-                        .child("posts")
-                        .child(postId)
-                        .child("commentCount").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int commentsCount = 0;
-                        if (snapshot.exists()){
-                            commentsCount = snapshot.getValue(Integer.class);
-                        }
-                        database.getReference()
-                                .child("posts")
-                                .child(postId)
-                                .child("commentCount")
-                                .setValue(commentsCount + 1)
-                                .addOnSuccessListener(unused1 -> {
-
-                                    binding.commentsET.setText("");
-                                    Toast.makeText(CommentActivity.this, "Commented", Toast.LENGTH_SHORT).show();
-
-                                    if (!userId.equals(FirebaseAuth.getInstance().getUid())){
-                                        NotificationModel notification = new NotificationModel();
-                                        notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
-                                        notification.setNotificationAt(new Date().getTime());
-                                        notification.setPostID(postId);
-                                        notification.setPostedBY(userId);
-                                        notification.setType("comment");
-
-                                        database.getReference()
-                                                .child("notification")
-                                                .child(userId)
-                                                .push()
-                                                .setValue(notification);
-                                    }
-                                    binding.sendCommentBtn.setClickable(true);
-                                });
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(CommentActivity.this, "Error : " + error.getMessage(), Toast.LENGTH_LONG).show();
-                        binding.sendCommentBtn.setClickable(true);
-                    }
-                }));
-    }
+//    private void setCommentData(){
+//        CommentModel comment = new CommentModel();
+//        comment.setCommentText(binding.commentsET.getText().toString());
+//        comment.setCommentedBy(auth.getUid());
+//        comment.setCommentedAt(new Date().getTime());
+//
+//        database.getReference()
+//                .child("posts")
+//                .child(postId)
+//                .child("comments")
+//                .push()
+//                .setValue(comment)
+//                .addOnSuccessListener(unused ->
+//                        database.getReference()
+//                        .child("posts")
+//                        .child(postId)
+//                        .child("commentCount").addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        int commentsCount = 0;
+//                        if (snapshot.exists()){
+//                            commentsCount = snapshot.getValue(Integer.class);
+//                        }
+//                        database.getReference()
+//                                .child("posts")
+//                                .child(postId)
+//                                .child("commentCount")
+//                                .setValue(commentsCount + 1)
+//                                .addOnSuccessListener(unused1 -> {
+//
+//                                    binding.commentsET.setText("");
+//                                    Toast.makeText(CommentActivity.this, "Commented", Toast.LENGTH_SHORT).show();
+//
+//                                    if (!userId.equals(FirebaseAuth.getInstance().getUid())){
+//                                        NotificationModel notification = new NotificationModel();
+//                                        notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
+//                                        notification.setNotificationAt(new Date().getTime());
+//                                        notification.setPostID(postId);
+//                                        notification.setPostedBY(userId);
+//                                        notification.setType("comment");
+//
+//                                        database.getReference()
+//                                                .child("notification")
+//                                                .child(userId)
+//                                                .push()
+//                                                .setValue(notification);
+//                                    }
+//                                    binding.sendCommentBtn.setClickable(true);
+//                                });
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//                        Toast.makeText(CommentActivity.this, "Error : " + error.getMessage(), Toast.LENGTH_LONG).show();
+//                        binding.sendCommentBtn.setClickable(true);
+//                    }
+//                }));
+//    }
 
 
     // Back to Main Activity -------------------------->

@@ -13,166 +13,6 @@
         android:layout_height="wrap_content"
         tools:context=".Fragments.PostFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/toolbar2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:text="@string/post"
-                app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-                app:layout_constraintStart_toStartOf="@+id/toolbar2"
-                app:layout_constraintTop_toTopOf="@+id/toolbar2" />
-
-            <ImageView
-                android:id="@+id/sendPostIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
-                android:src="@drawable/ic_baseline_send_comment"
-                app:layout_constraintBottom_toTopOf="@+id/view4"
-                app:layout_constraintEnd_toEndOf="@id/toolbar2"
-                app:layout_constraintTop_toTopOf="@id/toolbar2" />
-
-            <View
-                android:id="@+id/view4"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/grey"
-                app:layout_constraintBottom_toBottomOf="@id/toolbar2"
-                app:layout_constraintEnd_toEndOf="@id/toolbar2"
-                app:layout_constraintStart_toStartOf="@id/toolbar2" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_pic_post"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/placeholder"
-            app:civ_border_color="@color/grey"
-            app:civ_border_width="1dp"
-            app:layout_constraintStart_toStartOf="@id/inner"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0.5dp"
-            android:background="@color/grey"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/card"
-            app:layout_constraintEnd_toEndOf="@id/inner"
-            app:layout_constraintStart_toStartOf="@id/inner"
-            app:layout_constraintTop_toBottomOf="@+id/profile_pic_post"
-            app:layout_constraintVertical_bias="0.40" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="30dp"
-            app:cardBackgroundColor="@color/greyish_white"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="8dp"
-            app:layout_constraintEnd_toEndOf="@id/inner"
-            app:layout_constraintStart_toStartOf="@id/inner"
-            app:layout_constraintTop_toBottomOf="@+id/profile_pic_post">
-
-            <EditText
-                android:id="@+id/askQuestionET"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:background="@android:color/transparent"
-                android:hint="@string/ask_your_question"
-                android:imeOptions="actionDone"
-                android:inputType="textMultiLine"
-                android:minHeight="85dp"
-                android:maxHeight="105dp"
-                android:padding="13dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/upload_image"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
-            android:drawablePadding="20dp"
-            android:fontFamily="serif"
-            android:padding="10dp"
-            android:text="@string/upload_image"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="17sp"
-            app:drawableTint="@color/appColor"
-            app:drawableTintMode="add"
-            app:layout_constraintEnd_toEndOf="@id/inner"
-            app:layout_constraintStart_toStartOf="@id/inner"
-            app:layout_constraintTop_toBottomOf="@+id/card"
-            app:drawableStartCompat="@drawable/ic_baseline_image_24" />
-
-        <ImageView
-            android:id="@+id/questionImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:adjustViewBounds="true"
-            android:background="@color/grey"
-            android:contentDescription="@string/todo"
-            android:maxHeight="250dp"
-            android:visibility="gone"
-            android:scaleType="fitCenter"
-            app:layout_constraintEnd_toEndOf="@id/inner"
-            app:layout_constraintStart_toStartOf="@id/inner"
-            app:layout_constraintTop_toBottomOf="@+id/upload_image" />
-
-        <TextView
-            android:id="@+id/user_name_post"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:fontFamily="serif"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="17.5sp"
-            app:layout_constraintBottom_toBottomOf="@+id/profile_pic_post"
-            app:layout_constraintStart_toEndOf="@+id/profile_pic_post"
-            app:layout_constraintTop_toTopOf="@+id/profile_pic_post" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/postBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="25dp"
-            android:background="@drawable/button_bg"
-            android:text="@string/post"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/inner"
-            app:layout_constraintStart_toStartOf="@id/inner"
-            app:layout_constraintTop_toBottomOf="@+id/questionImage"
-            app:layout_constraintVertical_bias="0.0" />
-
         <ProgressBar
             android:id="@+id/progressBar"
             style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
@@ -182,8 +22,56 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profile_pic_post" />
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            android:background="@drawable/rv_bg"
+            android:elevation="5dp"
+            android:padding="7dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/text"
+                android:layout_marginEnd="25dp"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_keyboard_24"
+                android:contentDescription="@string/todo" />
+
+            <ImageView
+                android:id="@+id/camera"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:src="@drawable/camera_src"
+                android:contentDescription="@string/todo"/>
+
+            <ImageView
+                android:id="@+id/voice"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="25dp"
+                android:src="@drawable/voice_src"
+                android:contentDescription="@string/todo"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/frameSearch"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

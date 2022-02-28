@@ -5,7 +5,9 @@
       <map>
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/add_post_background.xml" value="0.2890625" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/button_bg.xml" value="0.2890625" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/button_bg_2.xml" value="0.1855" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/circle_shape.xml" value="0.2890625" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/circular_bg.xml" value="0.183" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/comment_bg.xml" value="0.23717948717948717" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/corner_shape_bottom_sheet.xml" value="0.2890625" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/cursor.xml" value="0.2890625" />
@@ -22,7 +24,9 @@
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.2890625" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_exit_to_app_24.xml" value="0.2890625" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.2890625" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.182" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_menu_book_24.xml" value="0.2890625" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_message_24.xml" value="0.1855" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_people_24.xml" value="0.2890625" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2890625" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_person_24_profile_placeholder.xml" value="0.2890625" />
@@ -32,9 +36,14 @@
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2890625" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_security_24.xml" value="0.2890625" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.2890625" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.182" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_baseline_thumb_down_24.xml" value="0.1855" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2890625" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/ic_person_24.xml" value="0.2890625" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/like_bg.xml" value="0.1855" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/rv_bg.xml" value="0.1855" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/search_view_background.xml" value="0.2890625" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/drawable/voice_logo.xml" value="0.183" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/activity_comment.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/activity_login.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/activity_main.xml" value="0.26871794871794874" />
@@ -47,13 +56,16 @@
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/bottom_sheet_delete.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/bottom_sheet_home_officials.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/bottom_sheet_home_unofficials.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/choose_camera_or_scanner_dialog.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/comment_rv_view.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/comments_rv_view.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/confirmation_before_deleting.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/content_sign_up.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/delete_comment_dialog.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/exit_application_dialog.xml" value="0.2642533936651584" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_edit_post.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_home.xml" value="0.2484375" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_image_search.xml" value="0.25885416666666666" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_my_questions.xml" value="0.25885416666666666" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_notification.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_post.xml" value="0.26871794871794874" />
@@ -63,6 +75,9 @@
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_second.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_sign_in.xml" value="0.25885416666666666" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_sign_up.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_type_search.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/fragment_voice_search.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/homepage_question_view.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/logout_dialog.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/my_question_post_view.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/notification_rv.xml" value="0.27291666666666664" />

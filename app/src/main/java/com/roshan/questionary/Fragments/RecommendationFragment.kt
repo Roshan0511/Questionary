@@ -65,7 +65,9 @@ class RecommendationFragment : Fragment() {
                         for (data in snapshot.children){
                             val user : UserModel ?= data.getValue(UserModel::class.java)
                             user!!.userId = data.key
-                            list.add(user)
+                            if (!user.userId.equals(auth!!.uid)){
+                                list.add(user)
+                            }
                         }
                         adapter!!.notifyDataSetChanged()
                         binding!!.progressBar6.visibility = View.GONE
