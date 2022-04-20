@@ -25,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.roshan.questionary.Authentication.LoginActivity;
 import com.roshan.questionary.Dialogs.AddPassionDialog;
 import com.roshan.questionary.Dialogs.LogOutDialog;
 import com.roshan.questionary.Dialogs.ShowingProfileDialog;
@@ -143,7 +142,7 @@ public class ProfileFragment extends Fragment {
 
     //Setting Image and Name when this fragment is open ---------------------->
 
-    public void setDataInFragment(){
+    private void setDataInFragment(){
         binding.progressBar.setVisibility(View.VISIBLE);
 
         database.getReference().child("Users").child(Objects.requireNonNull(auth.getUid()))

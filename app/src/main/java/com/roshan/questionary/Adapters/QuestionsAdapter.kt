@@ -21,10 +21,9 @@ import com.roshan.questionary.databinding.HomepageQuestionViewBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-class QuestionsAdapter(private val context: Context, private val list: List<PostModel>) :
+class QuestionsAdapter(private val context: Context?, private val list: List<PostModel>) :
     RecyclerView.Adapter<QuestionsAdapter.MyViewHolder>() {
 
-    private val auth = FirebaseAuth.getInstance()
     private val database = FirebaseDatabase.getInstance()
 
     override fun onCreateViewHolder(
@@ -39,7 +38,7 @@ class QuestionsAdapter(private val context: Context, private val list: List<Post
     override fun onBindViewHolder(holder: QuestionsAdapter.MyViewHolder, position: Int) {
         val question: PostModel = list[position]
 
-        holder.binding.question.text = question.questionTxt
+        holder.binding!!.question.text = question.questionTxt
 
         database.reference
             .child("Users")
@@ -48,10 +47,12 @@ class QuestionsAdapter(private val context: Context, private val list: List<Post
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()){
                         val userModel: UserModel? = snapshot.getValue(UserModel::class.java)
-                        Glide.with(context)
-                            .load(userModel!!.profilePic)
-                            .placeholder(R.drawable.placeholder)
-                            .into(holder.binding.userProfilePic)
+                        if (context != null){
+                            Glide.with(context.applicationContext)
+                                .load(userModel!!.profilePic)
+                                .placeholder(R.drawable.man)
+                                .into(holder.binding.userProfilePic)
+                        }
                     }
                     else{
                         Toast.makeText(context, "No Data Found", Toast.LENGTH_SHORT).show()
@@ -70,7 +71,7 @@ class QuestionsAdapter(private val context: Context, private val list: List<Post
             val intent = Intent(context, CommentActivity::class.java)
             intent.putExtra("postId", question.postId)
             intent.putExtra("userId", question.userId)
-            context.startActivity(intent)
+            context!!.startActivity(intent)
         }
     }
 
@@ -79,5 +80,5 @@ class QuestionsAdapter(private val context: Context, private val list: List<Post
     }
 
 
-    inner class MyViewHolder(val binding: HomepageQuestionViewBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class MyViewHolder(val binding: HomepageQuestionViewBinding?) : RecyclerView.ViewHolder(binding!!.root)
 }

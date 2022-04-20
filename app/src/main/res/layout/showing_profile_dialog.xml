@@ -6,8 +6,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePicSearch"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_margin="10dp"
         android:scaleType="centerCrop"
         android:src="@drawable/placeholder"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/grey"
-        android:padding="7dp"
+        android:padding="3dp"
         android:src="@android:drawable/ic_menu_close_clear_cancel"
         app:layout_constraintBottom_toTopOf="@+id/profilePicSearch"
         app:layout_constraintEnd_toEndOf="@+id/profilePicSearch"

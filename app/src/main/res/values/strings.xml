@@ -77,4 +77,12 @@
     <string name="scan_text">Scan Text</string>
     <string name="upload">Upload</string>
     <string name="tap_and_ask_it_out_loud">Tap and ask it out loud</string>
+    <string name="category">Category</string>
+    <string name="subject">Subject</string>
+    <string name="ask_now">Ask Now</string>
+    <string name="post_your_question"><u>Ask!!!</u></string>
+    <string name="step_by_step_explanation">Step-by-step explanation:</string>
+    <string name="answer">Answer:</string>
+    <string name="write_your_explanation_here">Write your explanation here.</string>
+    <string name="write_your_answer_here">Write your answer here.</string>
 </resources>

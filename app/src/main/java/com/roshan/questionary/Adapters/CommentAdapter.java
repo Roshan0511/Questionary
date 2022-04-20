@@ -18,21 +18,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.roshan.questionary.Dialogs.DeleteCommentDialog;
+import com.roshan.questionary.Models.AnswerModel;
 import com.roshan.questionary.Models.CommentModel;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.CommentsRvViewBinding;
 import java.util.List;
+import java.util.Objects;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHolder> {
 
     Context context;
-    List<CommentModel> list;
+    List<AnswerModel> list;
     String postId;
     FirebaseDatabase database;
     FirebaseAuth auth;
 
-    public CommentAdapter(Context context, List<CommentModel> list, String postId) {
+    public CommentAdapter(Context context, List<AnswerModel> list, String postId) {
         this.context = context;
         this.list = list;
         this.postId = postId;
@@ -54,17 +56,21 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
     @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        CommentModel model = list.get(position);
+        AnswerModel model = list.get(position);
 
-        holder.binding.answer.setText(model.getCommentText());
-        holder.binding.steps.setVisibility(View.GONE);
-        holder.binding.stepsTxt.setVisibility(View.GONE);
+        holder.binding.answer.setText(model.getAnswerText());
+        if (model.getExplanationText().trim().isEmpty()){
+            holder.binding.steps.setVisibility(View.GONE);
+            holder.binding.stepsTxt.setVisibility(View.GONE);
+        } else {
+            holder.binding.steps.setText(model.getExplanationText());
+        }
 //        holder.binding.dateRvForList.setText(new SimpleDateFormat("d MMM, h:mm aaa")
 //                .format(new Date(Long.parseLong(model.getCommentedAt()+""))));
 
         database.getReference()
                 .child("Users")
-                .child(model.getCommentedBy())
+                .child(model.getAnswerBy())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -89,9 +95,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
 
 
         holder.binding.commentItem.setOnLongClickListener(v -> {
-            if (model.getCommentedBy().equals(FirebaseAuth.getInstance().getUid())){
+            if (model.getAnswerBy().equals(FirebaseAuth.getInstance().getUid())){
 
-                DeleteCommentDialog dialog = new DeleteCommentDialog(postId, model.getCommentId());
+                DeleteCommentDialog dialog = new DeleteCommentDialog(postId, model.getAnswerId());
                 dialog.show(((FragmentActivity)context).getSupportFragmentManager(), dialog.getTag());
                 dialog.setCancelable(false);
 
@@ -119,13 +125,39 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void deleteComment(String postId, String commentId){
+    public void deleteComment(String postId, String answerId){
         database.getReference()
                 .child("posts")
                 .child(postId)
-                .child("comments")
-                .child(commentId)
+                .child("answers")
+                .child(answerId)
                 .removeValue();
+
+        database.getReference()
+                .child("posts")
+                .child(postId)
+                .child("answerCount")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int answerCount = 0;
+                        if (snapshot.exists()){
+                            final String result = Objects.requireNonNull(snapshot.getValue()).toString();
+                            answerCount = Integer.parseInt(result);
+                        }
+
+                        database.getReference()
+                                .child("posts")
+                                .child(postId)
+                                .child("answerCount")
+                                .setValue(answerCount-1);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(context, "Error " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
         notifyDataSetChanged();
     }
