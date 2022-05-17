@@ -105,31 +105,14 @@
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:padding="@dimen/_1sdp"
+        android:padding="@dimen/_2sdp"
         android:drawablePadding="@dimen/_6sdp"
         android:text="@string/_0"
         android:textSize="17sp"
         android:gravity="center_vertical"
-        app:drawableStartCompat="@drawable/ic_baseline_thumb_up_24"
+        app:drawableStartCompat="@drawable/heart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/steps" />
-
-    <TextView
-        android:id="@+id/dislike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:padding="@dimen/_1sdp"
-        android:drawablePadding="@dimen/_6sdp"
-        android:text="@string/_0"
-        android:textSize="17sp"
-        android:gravity="center_vertical"
-        app:drawableStartCompat="@drawable/ic_baseline_thumb_down_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/like"
         app:layout_constraintTop_toBottomOf="@+id/steps" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

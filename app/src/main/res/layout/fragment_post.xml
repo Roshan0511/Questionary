@@ -124,7 +124,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="textMultiLine"
                 android:padding="13dp"
-                android:minHeight="65dp"
+                android:minHeight="@dimen/_60sdp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         </androidx.cardview.widget.CardView>
 

@@ -169,6 +169,7 @@ public class PostFragment extends Fragment implements AdapterView.OnItemSelected
                 postModel.setUserId(auth.getUid());
                 postModel.setTime(new Date().getTime());
                 postModel.setQuestionTxt(binding.askQuestionET.getText().toString());
+                postModel.setSubject(subjectTxt);
 
                 database.getReference().child("posts")
                         .push()
@@ -191,6 +192,7 @@ public class PostFragment extends Fragment implements AdapterView.OnItemSelected
             postModel.setUserId(auth.getUid());
             postModel.setTime(new Date().getTime());
             postModel.setQuestionTxt(binding.askQuestionET.getText().toString());
+            postModel.setSubject(subjectTxt);
 
             database.getReference().child("posts")
                     .push()
@@ -215,7 +217,6 @@ public class PostFragment extends Fragment implements AdapterView.OnItemSelected
         } else {
             subjectTxt = subjects[position];
         }
-        Toast.makeText(requireContext(), "Category: " + subjectTxt, Toast.LENGTH_SHORT).show();
     }
 
     @Override

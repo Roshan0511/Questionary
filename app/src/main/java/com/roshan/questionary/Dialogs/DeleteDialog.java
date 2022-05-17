@@ -1,6 +1,7 @@
 package com.roshan.questionary.Dialogs;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -8,11 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
+import com.roshan.questionary.Activities.CommentActivity;
+import com.roshan.questionary.Adapters.MyQuestionsAdapter;
+import com.roshan.questionary.Adapters.QuestionsAdapter;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.ConfirmationBeforeDeletingBinding;
 
@@ -54,8 +62,8 @@ public class DeleteDialog extends DialogFragment {
 
         binding.cancelBtn.setOnClickListener(v -> dismiss());
         binding.deleteBtn.setOnClickListener(v -> {
-//            PostAdapter postAdapter = new PostAdapter();
-//            postAdapter.deleteData(postId);
+            MyQuestionsAdapter questionsAdapter = new MyQuestionsAdapter();
+            questionsAdapter.deleteData(postId);
 
             dismiss();
         });

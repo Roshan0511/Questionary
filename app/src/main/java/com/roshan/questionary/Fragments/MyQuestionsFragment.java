@@ -56,9 +56,7 @@ public class MyQuestionsFragment extends Fragment {
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        binding.backBtn.setOnClickListener(v -> {
-            pressBackButton();
-        });
+        binding.backBtn.setOnClickListener(v -> pressBackButton());
 
         return binding.getRoot();
     }
@@ -80,7 +78,6 @@ public class MyQuestionsFragment extends Fragment {
                         }
                     }
                 }
-                binding.count.setText(list.size() + "");
                 adapter.notifyDataSetChanged();
                 binding.progressBar6.setVisibility(View.GONE);
             }
@@ -93,7 +90,7 @@ public class MyQuestionsFragment extends Fragment {
     }
 
     private void pressBackButton() {
-        ProfileFragment fragment = new ProfileFragment();
+        MyProfileFragment fragment = new MyProfileFragment();
         assert getFragmentManager() != null;
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.linearLayout, fragment);

@@ -17,12 +17,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.roshan.questionary.Activities.CommentActivity;
 import com.roshan.questionary.Dialogs.DeleteCommentDialog;
 import com.roshan.questionary.Models.AnswerModel;
 import com.roshan.questionary.Models.CommentModel;
+import com.roshan.questionary.Models.NotificationModel;
+import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.CommentsRvViewBinding;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +38,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
     String postId;
     FirebaseDatabase database;
     FirebaseAuth auth;
+    int likeCount;
 
     public CommentAdapter(Context context, List<AnswerModel> list, String postId) {
         this.context = context;
@@ -67,6 +73,58 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
         }
 //        holder.binding.dateRvForList.setText(new SimpleDateFormat("d MMM, h:mm aaa")
 //                .format(new Date(Long.parseLong(model.getCommentedAt()+""))));
+        holder.binding.like.setText(model.getLikeCount() + "");
+
+
+
+        // Setting Like Feature
+
+        database.getReference().child("posts")
+                .child(postId)
+                .child("answers")
+                .child(model.getAnswerId())
+                .child("likes")
+                .child(Objects.requireNonNull(auth.getUid()))
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            holder.binding.like.setCompoundDrawablesWithIntrinsicBounds
+                                    (R.drawable.like, 0, 0, 0);
+                        }
+                        else {
+                            holder.binding.like.setOnClickListener(v ->
+                                    database.getReference().child("posts")
+                                            .child(postId)
+                                            .child("answers")
+                                            .child(model.getAnswerId())
+                                            .child("likes")
+                                            .child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                                            .setValue(true)
+                                            .addOnSuccessListener(unused -> database.getReference().child("posts")
+                                                    .child(postId)
+                                                    .child("answers")
+                                                    .child(model.getAnswerId())
+                                                    .child("likeCount")
+                                                    .setValue(likeCount + 1)
+                                                    .addOnSuccessListener(unused1 -> {
+                                                        holder.binding.like
+                                                                .setCompoundDrawablesWithIntrinsicBounds
+                                                                        (R.drawable.like, 0, 0, 0);
+
+                                                    })));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+
+
 
         database.getReference()
                 .child("Users")

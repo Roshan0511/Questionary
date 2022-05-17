@@ -17,28 +17,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/editPostHome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="20dp"
-        android:drawablePadding="20dp"
-        android:fontFamily="serif"
-        android:padding="8dp"
-        android:text="@string/edit"
-        android:textSize="17sp"
-        app:drawableStartCompat="@drawable/ic_baseline_edit_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view6" />
-
-    <TextView
         android:id="@+id/deletePostHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:drawablePadding="20dp"
         android:fontFamily="serif"
@@ -48,7 +31,7 @@
         app:drawableStartCompat="@drawable/ic_baseline_delete_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPostHome" />
+        app:layout_constraintTop_toBottomOf="@+id/view6" />
 
     <TextView
         android:id="@+id/downloadPostHome"

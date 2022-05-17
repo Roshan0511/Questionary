@@ -25,8 +25,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Questionary">
         <activity
+            android:name=".Activities.EditProfileActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Activities.QuestionCommentActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Authentication.LoginActivity"
             android:exported="true"

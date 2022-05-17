@@ -5,6 +5,8 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,7 +18,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentActivity;
+
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,12 +29,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.google.firebase.database.ValueEventListener;
-import com.roshan.questionary.Fragments.EditPostFragment;
 import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.BottomSheetHomeOfficialsBinding;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 public class BottomSheetDialogForOfficials extends BottomSheetDialogFragment {
 
@@ -39,7 +44,7 @@ public class BottomSheetDialogForOfficials extends BottomSheetDialogFragment {
     String userId;
     FirebaseDatabase database;
     FirebaseAuth auth;
-    String url;
+    String url, text;
 
     public BottomSheetDialogForOfficials(Context context, String postId, String userId) {
         this.postId = postId;
@@ -57,27 +62,20 @@ public class BottomSheetDialogForOfficials extends BottomSheetDialogFragment {
 
         loadData();
 
-        binding.editPostHome.setOnClickListener(v -> {
-            editClicked();
-            dismiss();
-        });
-
-
-
         binding.sharePostHome.setOnClickListener(v -> {
 
-            Intent intent2 = new Intent();
-            intent2.setAction(Intent.ACTION_SEND);
-            intent2.setType("text/plain");
-            intent2.putExtra(Intent.EXTRA_TEXT, "Here your Question " + url);
-            startActivity(Intent.createChooser(intent2, "Share via"));
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, "Here your Question " + url + "\n\nQuestion is " + text);
+            startActivity(Intent.createChooser(intent, "Share via"));
 
             dismiss();
         });
 
         binding.deletePostHome.setOnClickListener(v -> {
             DeleteDialog dialog = new DeleteDialog(context, postId);
-            dialog.show(((FragmentActivity)context).getSupportFragmentManager(), dialog.getTag());
+            dialog.show(((FragmentActivity)requireContext()).getSupportFragmentManager(), dialog.getTag());
             dialog.setCancelable(false);
             dismiss();
         });
@@ -110,6 +108,7 @@ public class BottomSheetDialogForOfficials extends BottomSheetDialogFragment {
                     PostModel model = snapshot.getValue(PostModel.class);
                     assert model != null;
                     url = model.getQuestionImage();
+                    text = model.getQuestionTxt();
                 }
             }
 
@@ -149,25 +148,5 @@ public class BottomSheetDialogForOfficials extends BottomSheetDialogFragment {
         } else {
             ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
-    }
-
-
-
-
-    // Edit Post --------------------------------------->
-
-    private void editClicked(){
-        Bundle bundle = new Bundle();
-        bundle.putString("postId",postId); // Put anything what you want
-        bundle.putString("userId", userId);
-
-        EditPostFragment fragment = new EditPostFragment();
-        fragment.setArguments(bundle);
-
-        assert getFragmentManager() != null;
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.linearLayout, fragment)
-                .commit();
     }
 }

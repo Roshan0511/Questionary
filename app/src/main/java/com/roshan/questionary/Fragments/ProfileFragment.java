@@ -89,7 +89,7 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.recommendation.setOnClickListener(v -> {
-            Fragment fragment = new RecommendationFragment();
+            Fragment fragment = new SearchFragment();
             assert getFragmentManager() != null;
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.linearLayout, fragment);

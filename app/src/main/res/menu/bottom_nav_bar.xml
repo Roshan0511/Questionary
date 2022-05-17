@@ -12,10 +12,6 @@
         android:title="@string/post"
         android:icon="@drawable/ic_baseline_add_24" />
 
-    <item android:id="@+id/notification"
-        android:title="@string/notification"
-        android:icon="@drawable/ic_baseline_notifications_none_24"/>
-
     <item android:id="@+id/profile"
         android:title="@string/profile"
         android:icon="@drawable/ic_person_24"/>

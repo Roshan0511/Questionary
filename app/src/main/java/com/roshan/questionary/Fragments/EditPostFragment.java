@@ -1,6 +1,7 @@
 package com.roshan.questionary.Fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ public class EditPostFragment extends HomeFragment {
     FirebaseDatabase database;
     FirebaseStorage storage;
     Uri uri;
+    ProgressDialog pd;
     private RequestManager imageLoader;
 
     public EditPostFragment() {
@@ -57,104 +59,43 @@ public class EditPostFragment extends HomeFragment {
                              Bundle savedInstanceState) {
         binding = FragmentEditPostBinding.inflate(inflater, container, false);
 
-            auth = FirebaseAuth.getInstance();
-            database = FirebaseDatabase.getInstance();
-            storage = FirebaseStorage.getInstance();
-            binding.progressBar.setVisibility(View.VISIBLE);
+        initView();
+        setData();
 
-            Bundle bundle = this.getArguments();
-            if(bundle != null){
-                userId = bundle.getString("userId");
-                postId = bundle.getString("postId");
-            }
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            userId = bundle.getString("userId");
+            postId = bundle.getString("postId");
+        }
 
+        binding.backBtn.setOnClickListener(v -> pressBackButton());
 
-            database.getReference()
-                    .child("posts")
-                    .child(postId)
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()){
-                                PostModel post = snapshot.getValue(PostModel.class);
-
-                                assert post != null;
-                                binding.askQuestionET.setText(post.getQuestionTxt());
-                                if (post.getQuestionImage().equals("")){
-                                    binding.questionImage.setVisibility(View.GONE);
-                                }else {
-                                    imageUrl = post.getQuestionImage();
-                                    postTime = post.getTime();
-
-                                    if (getActivity()!=null && !getActivity().isFinishing()) {
-                                        Glide.with(EditPostFragment.this)
-                                                .load(imageUrl)
-                                                .placeholder(R.drawable.placeholder)
-                                                .into(binding.questionImage);
-
-                                        binding.questionImage.setVisibility(View.VISIBLE);
-                                    }
-                                }
-
-                                binding.progressBar.setVisibility(View.GONE);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(requireContext(), "Error : " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                            binding.progressBar.setVisibility(View.GONE);
-
-                        }
-                    });
-
-            database.getReference().child("Users")
-                    .child(userId)
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()){
-                                UserModel user = snapshot.getValue(UserModel.class);
-
-                                assert user != null;
-
-                                if (getActivity()!=null && !getActivity().isFinishing()) {
-                                    binding.userNameEdit.setText(user.getName());
-                                    Glide.with(EditPostFragment.this)
-                                            .load(user.getProfilePic())
-                                            .placeholder(R.drawable.placeholder)
-                                            .into(binding.profilePicEdit);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+        binding.updateBtn.setOnClickListener(v -> {
+            pd.show();
+            requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            updateBtnClicked();
+        });
 
 
-
-
-            binding.backBtn.setOnClickListener(v -> pressBackButton());
-
-            binding.updateBtn.setOnClickListener(v -> {
-                binding.progressBar.setVisibility(View.VISIBLE);
-                requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                updateBtnClicked();
-            });
-
-
-            binding.changeImage.setOnClickListener(v -> {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, 11);
-            });
+        binding.changeImage.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(intent, 11);
+        });
 
         return binding.getRoot();
+    }
+
+    private void initView() {
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        storage = FirebaseStorage.getInstance();
+
+        pd = new ProgressDialog(requireContext(), R.style.AppCompatAlertDialogStyle);
+        pd.setMessage("Please wait...");
+        pd.setCancelable(false);
     }
 
     @Override
@@ -171,6 +112,82 @@ public class EditPostFragment extends HomeFragment {
     }
 
 
+    private void setData(){
+        pd.show();
+
+        database.getReference()
+                .child("posts")
+                .child(postId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (pd.isShowing()){
+                            pd.dismiss();
+                        }
+                        if (snapshot.exists()){
+                            PostModel post = snapshot.getValue(PostModel.class);
+
+                            assert post != null;
+                            binding.askQuestionET.setText(post.getQuestionTxt());
+                            if (post.getQuestionImage().equals("")){
+                                binding.questionImage.setVisibility(View.GONE);
+                            }else {
+                                imageUrl = post.getQuestionImage();
+                                postTime = post.getTime();
+
+                                if (getActivity()!=null && !getActivity().isFinishing()) {
+                                    Glide.with(EditPostFragment.this)
+                                            .load(imageUrl)
+                                            .placeholder(R.drawable.placeholder)
+                                            .into(binding.questionImage);
+
+                                    binding.questionImage.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(requireContext(), "Error : " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        if (pd.isShowing()){
+                            pd.dismiss();
+                        }
+                    }
+                });
+
+        database.getReference().child("Users")
+                .child(userId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (pd.isShowing()){
+                            pd.dismiss();
+                        }
+                        if (snapshot.exists()){
+                            UserModel user = snapshot.getValue(UserModel.class);
+
+                            assert user != null;
+
+                            if (getActivity()!=null && !getActivity().isFinishing()) {
+                                binding.userNameEdit.setText(user.getName());
+                                Glide.with(EditPostFragment.this)
+                                        .load(user.getProfilePic())
+                                        .placeholder(R.drawable.placeholder)
+                                        .into(binding.profilePicEdit);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        if (pd.isShowing()){
+                            pd.dismiss();
+                        }
+                    }
+                });
+    }
+
 
 
     private void updateBtnClicked(){
@@ -179,14 +196,12 @@ public class EditPostFragment extends HomeFragment {
             final StorageReference reference = storage.getReference().child("posts")
                     .child(Objects.requireNonNull(auth.getUid()))
                     .child(new Date().getTime() + "");
-            reference.putFile(uri).addOnSuccessListener(taskSnapshot -> reference.getDownloadUrl().addOnSuccessListener(uri -> {
-
-                database.getReference()
-                        .child("posts")
-                        .child(postId)
-                        .child("questionImage")
-                        .setValue(uri.toString());
-            }));
+            reference.putFile(uri).addOnSuccessListener(taskSnapshot -> reference.getDownloadUrl().addOnSuccessListener(uri ->
+                    database.getReference()
+                    .child("posts")
+                    .child(postId)
+                    .child("questionImage")
+                    .setValue(uri.toString())));
         }
 
 
@@ -203,9 +218,11 @@ public class EditPostFragment extends HomeFragment {
 
         binding.askQuestionET.setText(null);
         binding.questionImage.setVisibility(View.GONE);
-
-        binding.progressBar.setVisibility(View.GONE);
         requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+        if (pd.isShowing()){
+            pd.dismiss();
+        }
 
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);

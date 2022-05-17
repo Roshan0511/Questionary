@@ -106,16 +106,4 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar3"
-        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/swipeRefresh"
-        app:layout_constraintEnd_toEndOf="@id/swipeRefresh"
-        app:layout_constraintStart_toStartOf="@id/swipeRefresh"
-        app:layout_constraintTop_toTopOf="@id/swipeRefresh" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

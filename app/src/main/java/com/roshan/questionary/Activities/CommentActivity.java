@@ -5,21 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.roshan.questionary.Adapters.CommentAdapter;
+import com.roshan.questionary.Dialogs.BottomSheetDialogForUnOfficials;
 import com.roshan.questionary.Dialogs.ShowingImageDialog;
 import com.roshan.questionary.Models.AnswerModel;
-import com.roshan.questionary.Models.CommentModel;
 import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.Models.UserModel;
 import com.roshan.questionary.R;
@@ -37,6 +40,7 @@ public class CommentActivity extends AppCompatActivity {
 
     String postId, userId;
     CommentAdapter adapter;
+    ProgressDialog pd;
     List<AnswerModel> list = new ArrayList<>();
 
     @Override
@@ -47,13 +51,14 @@ public class CommentActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        auth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-
         postId = getIntent().getStringExtra("postId");
         userId = getIntent().getStringExtra("userId");
 
+        initView();
+
         setDataInCommentActivity();
+
+        setBookmarkData();
 
         binding.commentsBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, QuestionCommentActivity.class);
@@ -62,11 +67,11 @@ public class CommentActivity extends AppCompatActivity {
         });
 
 
-//        binding.optionMenuCommentAc.setOnClickListener(v -> {
-//            BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetDialogForUnOfficials(CommentActivity.this
-//                    , postId, userId);
-//            bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
-//        });
+        binding.optionMenuCommentAc.setOnClickListener(v -> {
+            BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetDialogForUnOfficials(CommentActivity.this
+                    , postId, userId);
+            bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+        });
 
         database.getReference()
                 .child("posts")
@@ -112,15 +117,29 @@ public class CommentActivity extends AppCompatActivity {
     }
 
 
+    private void initView() {
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
+        pd = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
+        pd.setMessage("Please Wait...");
+        pd.setCancelable(false);
+    }
+
 
 
     // Set Data from Database -------------------------->
 
     private void setDataInCommentActivity(){
+        pd.show();
+
         database.getReference().child("Users").child(userId).addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (pd.isShowing()){
+                    pd.dismiss();
+                }
                 if (snapshot.exists()){
                     UserModel userModel = snapshot.getValue(UserModel.class);
                     assert userModel != null;
@@ -139,6 +158,9 @@ public class CommentActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                if (pd.isShowing()){
+                    pd.dismiss();
+                }
                 Toast.makeText(CommentActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
@@ -147,11 +169,15 @@ public class CommentActivity extends AppCompatActivity {
             @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (pd.isShowing()){
+                    pd.dismiss();
+                }
                 if (snapshot.exists()){
                     PostModel post = snapshot.getValue(PostModel.class);
                     assert post != null;
 
                     binding.questionTxt.setText(post.getQuestionTxt());
+                    binding.subjectToolbar.setText(post.getSubject());
 
                     if (!post.getQuestionImage().isEmpty()){
                         binding.questionImg.setVisibility(View.VISIBLE);
@@ -164,73 +190,73 @@ public class CommentActivity extends AppCompatActivity {
                     else {
                         binding.questionImg.setVisibility(View.GONE);
                     }
-
-                    // Setting Like Features -------------------------->
-
-//                    database.getReference().child("posts")
-//                            .child(postId)
-//                            .child("likes")
-//                            .child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
-//                            .addListenerForSingleValueEvent(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                    if (snapshot.exists()){
-//                                        binding.likeCommentAc.setCompoundDrawablesWithIntrinsicBounds
-//                                                (R.drawable.like, 0, 0, 0);
-//                                    }
-//                                    else {
-//                                        binding.likeCommentAc.setOnClickListener(v ->
-//                                                database.getReference().child("posts")
-//                                                .child(postId)
-//                                                .child("likes")
-//                                                .child(FirebaseAuth.getInstance().getUid())
-//                                                .setValue(true)
-//                                                .addOnSuccessListener(unused -> database.getReference().child("posts")
-//                                                        .child(postId)
-//                                                        .child("likeCount")
-//                                                        .setValue(post.getLikeCount() + 1)
-//                                                        .addOnSuccessListener(unused1 -> {
-//                                                            binding.likeCommentAc
-//                                                                    .setCompoundDrawablesWithIntrinsicBounds
-//                                                                            (R.drawable.like, 0, 0, 0);
-//
-//                                                            if (!userId.equals(FirebaseAuth.getInstance().getUid())){
-//                                                                NotificationModel notification = new NotificationModel();
-//                                                                notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
-//                                                                notification.setNotificationAt(new Date().getTime());
-//                                                                notification.setPostID(postId);
-//                                                                notification.setPostedBY(userId);
-//                                                                notification.setType("like");
-//
-//                                                                database.getReference()
-//                                                                        .child("notification")
-//                                                                        .child(userId)
-//                                                                        .push()
-//                                                                        .setValue(notification);
-//                                                            }
-//
-//                                                        })));
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError error) {
-//                                    Toast.makeText(CommentActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-//                                }
-//                            });
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                if (pd.isShowing()){
+                    pd.dismiss();
+                }
                 Toast.makeText(CommentActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
 
+    private void setBookmarkData(){
+        pd.show();
+
+        database.getReference()
+                .child("bookmarks")
+                .child(Objects.requireNonNull(auth.getUid()))
+                .child(postId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (pd.isShowing()){
+                            pd.dismiss();
+                        }
+
+                        if (snapshot.exists()){
+                            binding.bookmarkCommentAc.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_bookmark_added_24,
+                                    0,0,0);
+                        }
+
+                        else {
+                            binding.bookmarkCommentAc.setOnClickListener(v -> {
+                                database.getReference()
+                                        .child("bookmarks")
+                                        .child(Objects.requireNonNull(auth.getUid()))
+                                        .child(postId)
+                                        .setValue(true)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                binding.bookmarkCommentAc
+                                                        .setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_bookmark_added_24,
+                                                        0,0,0);
+
+                                                Toast.makeText(CommentActivity.this, "Added", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        if (pd.isShowing()){
+                            pd.dismiss();
+                        }
+                        Toast.makeText(CommentActivity.this, "Error : " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+
     // Back to Main Activity -------------------------->
-    private void back(){
+    public void back(){
         onBackPressed();
     }
 }

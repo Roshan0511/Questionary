@@ -5,22 +5,19 @@ public class PostModel {
     private String profilePic;
     private String questionImage;
     private String questionTxt;
-    private int likeCount;
-    private int commentCount;
     private String userId;
     private String postId;
+    private String subject;
     private long time;
 
     public PostModel() {
     }
 
-    public PostModel(String name, String profilePic, String questionImage, String questionTxt, int likeCount, int commentCount, long time) {
+    public PostModel(String name, String profilePic, String questionImage, String questionTxt, long time) {
         this.name = name;
         this.profilePic = profilePic;
         this.questionImage = questionImage;
         this.questionTxt = questionTxt;
-        this.likeCount = likeCount;
-        this.commentCount = commentCount;
         this.time = time;
     }
 
@@ -64,22 +61,6 @@ public class PostModel {
         this.questionTxt = questionTxt;
     }
 
-    public int getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
-    }
-
-    public int getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
-    }
-
     public long getTime() {
         return time;
     }
@@ -94,5 +75,13 @@ public class PostModel {
 
     public void setPostId(String postId) {
         this.postId = postId;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }

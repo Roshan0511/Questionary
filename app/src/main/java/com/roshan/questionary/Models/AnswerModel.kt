@@ -13,6 +13,9 @@ class AnswerModel() {
     var answerId: String = ""
         get() = field
         set(value) {field = value}
+    var likeCount: Int = 0
+        get() = field
+        set(value) {field = value}
     var answerAt: Long = 0
         get() = field
         set(value) {field = value}

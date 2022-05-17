@@ -67,7 +67,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                         UserModel userModel = snapshot.getValue(UserModel.class);
                         assert userModel != null;
 
-                        Glide.with(context)
+                        Glide.with(context.getApplicationContext())
                                 .load(userModel.getProfilePic())
                                 .placeholder(R.drawable.placeholder)
                                 .into(holder.binding.profilePicNotification);

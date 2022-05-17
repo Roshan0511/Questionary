@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.roshan.questionary.Dialogs.ExitAppDialog;
 import com.roshan.questionary.Fragments.HomeFragment;
-import com.roshan.questionary.Fragments.NotificationFragment;
+import com.roshan.questionary.Fragments.MyProfileFragment;
 import com.roshan.questionary.Fragments.PostFragment;
 import com.roshan.questionary.Fragments.ProfileFragment;
 import com.roshan.questionary.Fragments.SearchFragment;
@@ -93,18 +93,11 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new PostFragment();
                     break;
 
-                case R.id.notification:
-                    if (binding.bottomNavigationBar.getSelectedItemId()==R.id.notification){
-                        return false;
-                    }
-                    fragment = new NotificationFragment();
-                    break;
-
                 case R.id.profile:
                     if (binding.bottomNavigationBar.getSelectedItemId()==R.id.profile){
                         return false;
                     }
-                    fragment = new ProfileFragment();
+                    fragment = new MyProfileFragment();
                     break;
             }
 

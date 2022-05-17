@@ -158,7 +158,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_baseline_edit_24"
-                    app:tint="@color/appColor" />
+                    app:tint="@color/appColor"
+                    android:contentDescription="@string/todo" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -201,29 +202,17 @@
             app:layout_constraintTop_toBottomOf="@+id/myQuestionTxt">
 
             <TextView
-                android:id="@+id/textView9"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:drawablePadding="20dp"
-                android:text="@string/my_answers"
-                android:textSize="19sp"
-                app:drawableStartCompat="@drawable/ic_baseline_check_circle_outline_24"
-                app:layout_constraintEnd_toEndOf="@id/constraintLayout"
-                app:layout_constraintStart_toStartOf="@id/constraintLayout"
-                app:layout_constraintTop_toTopOf="@id/constraintLayout" />
-
-            <TextView
                 android:id="@+id/recommendation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:drawablePadding="20dp"
                 android:text="@string/recommendation"
                 android:textSize="19sp"
                 app:drawableStartCompat="@drawable/ic_baseline_people_24"
                 app:layout_constraintEnd_toEndOf="@id/constraintLayout"
                 app:layout_constraintStart_toStartOf="@id/constraintLayout"
-                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                app:layout_constraintTop_toTopOf="@id/constraintLayout"/>
 
             <TextView
                 android:id="@+id/logout"
