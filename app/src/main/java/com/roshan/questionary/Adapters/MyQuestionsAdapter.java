@@ -9,17 +9,21 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.roshan.questionary.Activities.CommentActivity;
 import com.roshan.questionary.Dialogs.BottomSheetDialogForOfficials;
+import com.roshan.questionary.Dialogs.DeleteDialog;
 import com.roshan.questionary.Models.PostModel;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.HomepageQuestionViewBinding;
@@ -33,15 +37,18 @@ public class MyQuestionsAdapter extends RecyclerView.Adapter<MyQuestionsAdapter.
     Context context;
     List<PostModel> list;
     FirebaseDatabase database;
+    FirebaseAuth auth;
 
     public MyQuestionsAdapter(Context context, List<PostModel> list) {
         this.context = context;
         this.list = list;
         database = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
     }
 
     public MyQuestionsAdapter() {
         database = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
     }
 
     @NonNull
@@ -87,6 +94,44 @@ public class MyQuestionsAdapter extends RecyclerView.Adapter<MyQuestionsAdapter.
             }
         });
 
+        database.getReference()
+                .child("bookmarks")
+                .child(auth.getUid())
+                .child(model.getPostId())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            holder.binding.bookmark.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_bookmark_added_24,
+                                    0, 0, 0);
+                        }
+                        else {
+                            holder.binding.bookmark.setOnClickListener(v -> {
+                                database.getReference()
+                                        .child("bookmarks")
+                                        .child(auth.getUid())
+                                        .child(model.getPostId())
+                                        .setValue(true)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                holder.binding.bookmark.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_bookmark_added_24,
+                                                        0, 0, 0);
+
+                                                Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
         holder.binding.giveAnswer.setOnClickListener(v -> {
             Intent intent = new Intent(context, CommentActivity.class);
             intent.putExtra("postId", model.getPostId());
@@ -95,9 +140,9 @@ public class MyQuestionsAdapter extends RecyclerView.Adapter<MyQuestionsAdapter.
         });
 
         holder.binding.questionItem.setOnLongClickListener(v -> {
-            BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetDialogForOfficials(context.getApplicationContext()
-                    , model.getPostId(), model.getUserId());
-            bottomSheetDialogFragment.show(((FragmentActivity)context).getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            DialogFragment deleteDialog = new DeleteDialog(context.getApplicationContext(), model.getPostId());
+            deleteDialog.setCancelable(false);
+            deleteDialog.show(((FragmentActivity)context).getSupportFragmentManager(), deleteDialog.getTag());
             return true;
         });
     }

@@ -60,8 +60,9 @@ class MyProfileFragment : Fragment() {
         }
 
         binding!!.myQuestionTxt.setOnClickListener { setFragment(MyQuestionsFragment()) }
+        binding!!.savedQuestion.setOnClickListener { setFragment(BookmarkFragment()) }
 
-//        binding!!.recommendation.setOnClickListener { setFragment(MyQuestionsFragment()) }
+        binding!!.recommendation.setOnClickListener { setFragment(SearchFragment()) }
 
         binding!!.logout.setOnClickListener {
             val dialog = LogOutDialog()
@@ -103,13 +104,17 @@ class MyProfileFragment : Fragment() {
                             context?.let { it1 ->
                                 Glide.with(it1)
                                     .load(user!!.profilePic)
-                                    .placeholder(R.drawable.man)
+                                    .placeholder(R.drawable.placeholder)
                                     .into(binding!!.profileImage)
                             }
 
                             binding!!.userName.text = user!!.name
                             binding!!.userEmail.text = user.email
                             binding!!.description.text = user.summary
+
+                            if (binding!!.description.text.equals("")){
+                                binding!!.description.text = "Add your description"
+                            }
                         }
                     }
 

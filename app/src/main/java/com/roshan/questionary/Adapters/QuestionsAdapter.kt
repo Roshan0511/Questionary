@@ -21,8 +21,9 @@ import com.roshan.questionary.R
 import com.roshan.questionary.databinding.HomepageQuestionViewBinding
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
-class QuestionsAdapter(private val context: Context?, private val list: List<PostModel>) :
+class QuestionsAdapter(private val context: Context?, private var list: List<PostModel>) :
     RecyclerView.Adapter<QuestionsAdapter.MyViewHolder>() {
     constructor() : this(null, emptyList())
 
@@ -133,4 +134,11 @@ class QuestionsAdapter(private val context: Context?, private val list: List<Pos
 
 
     inner class MyViewHolder(val binding: HomepageQuestionViewBinding?) : RecyclerView.ViewHolder(binding!!.root)
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    public fun filteredList(filterList: ArrayList<PostModel>){
+        list = filterList
+        notifyDataSetChanged()
+    }
 }

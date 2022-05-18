@@ -20,6 +20,7 @@ import com.roshan.questionary.Fragments.HomeFragment;
 import com.roshan.questionary.Fragments.MyProfileFragment;
 import com.roshan.questionary.Fragments.PostFragment;
 import com.roshan.questionary.Fragments.ProfileFragment;
+import com.roshan.questionary.Fragments.QuestionSearchFragment;
 import com.roshan.questionary.Fragments.SearchFragment;
 import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.ActivityMainBinding;
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     if (binding.bottomNavigationBar.getSelectedItemId()==R.id.search){
                         return false;
                     }
-                    fragment = new SearchFragment();
+                    fragment = new QuestionSearchFragment();
                     break;
 
                 case R.id.post:
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (binding.bottomNavigationBar.getSelectedItemId()==R.id.home ||
+                binding.bottomNavigationBar.getSelectedItemId()==R.id.search ||
                 binding.bottomNavigationBar.getSelectedItemId()==R.id.post ||
                 binding.bottomNavigationBar.getSelectedItemId()==R.id.profile){
 

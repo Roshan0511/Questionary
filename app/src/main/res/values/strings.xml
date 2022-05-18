@@ -87,4 +87,5 @@
     <string name="write_your_answer_here">Write your answer here.</string>
     <string name="description">Description</string>
     <string name="saved_questions">Saved Questions</string>
+    <string name="bookmarks">Bookmarks</string>
 </resources>

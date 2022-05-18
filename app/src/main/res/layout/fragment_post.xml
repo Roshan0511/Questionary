@@ -100,33 +100,25 @@
             app:layout_constraintTop_toBottomOf="@+id/textView20"
             tools:ignore="RtlSymmetry" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card"
+        <EditText
+            android:id="@+id/askQuestionET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="27.5dp"
             android:layout_marginEnd="30dp"
-            app:cardBackgroundColor="@color/greyish_white"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="3dp"
+            android:hint="@string/ask_your_question"
+            android:fontFamily="serif"
+            android:background="@drawable/edit_text_bg_black"
+            android:elevation="@dimen/_3sdp"
+            android:gravity="start"
+            android:inputType="textMultiLine"
+            android:padding="@dimen/_8sdp"
+            android:minHeight="@dimen/_65sdp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintEnd_toEndOf="@id/inner"
             app:layout_constraintStart_toStartOf="@id/inner"
-            app:layout_constraintTop_toBottomOf="@+id/subjectSpinner">
-
-            <EditText
-                android:id="@+id/askQuestionET"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:ems="10"
-                android:hint="@string/ask_your_question"
-                android:imeOptions="actionDone"
-                android:inputType="textMultiLine"
-                android:padding="13dp"
-                android:minHeight="@dimen/_60sdp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-        </androidx.cardview.widget.CardView>
+            app:layout_constraintTop_toBottomOf="@+id/subjectSpinner"/>
 
         <TextView
             android:id="@+id/upload_image"
@@ -145,7 +137,7 @@
             app:drawableTintMode="add"
             app:layout_constraintEnd_toEndOf="@id/inner"
             app:layout_constraintStart_toStartOf="@id/inner"
-            app:layout_constraintTop_toBottomOf="@+id/card"
+            app:layout_constraintTop_toBottomOf="@+id/askQuestionET"
             app:drawableStartCompat="@drawable/ic_baseline_image_24" />
 
         <ImageView

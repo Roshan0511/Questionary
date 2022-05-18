@@ -6,9 +6,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.roshan.questionary.Adapters.SearchAdapter;
 import com.roshan.questionary.Models.UserModel;
+import com.roshan.questionary.R;
 import com.roshan.questionary.databinding.FragmentSearchBinding;
 
 import java.util.ArrayList;
@@ -44,15 +47,10 @@ public class SearchFragment extends Fragment {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
 
         database = FirebaseDatabase.getInstance();
-        adapter = new SearchAdapter(getContext(), list);
 
-        setData();
-
-        filterList();
-
-        binding.searchRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.searchRv.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
-        binding.searchRv.setAdapter(adapter);
+        binding.backBtn.setOnClickListener(v -> {
+            pressBackButton();
+        });
 
         return binding.getRoot();
     }
@@ -73,8 +71,11 @@ public class SearchFragment extends Fragment {
                                 userModel.setUserId(dataSnapshot.getKey());
                                 list.add(userModel);
                             }
-                            adapter.notifyDataSetChanged();
+                            adapter = new SearchAdapter(getContext(), list);
+                            binding.searchRv.setLayoutManager(new LinearLayoutManager(getContext()));
+                            binding.searchRv.setAdapter(adapter);
                         }
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -103,6 +104,33 @@ public class SearchFragment extends Fragment {
                 adapter.filteredList(filteredList);
                 return true;
             }
+        });
+    }
+
+    private void pressBackButton() {
+        MyProfileFragment fragment = new MyProfileFragment();
+        assert getFragmentManager() != null;
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.linearLayout, fragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        setData();
+
+        filterList();
+
+        requireView().setFocusableInTouchMode(true);
+        requireView().requestFocus();
+        requireView().setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                pressBackButton();
+                return true;
+            }
+            return false;
         });
     }
 }

@@ -106,7 +106,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
                                                     .child("answers")
                                                     .child(model.getAnswerId())
                                                     .child("likeCount")
-                                                    .setValue(likeCount + 1)
+                                                    .setValue(model.getLikeCount() + 1)
                                                     .addOnSuccessListener(unused1 -> {
                                                         holder.binding.like
                                                                 .setCompoundDrawablesWithIntrinsicBounds
@@ -121,9 +121,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
                         Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-
-
-
 
 
         database.getReference()

@@ -35,7 +35,15 @@ class EditProfileActivity : AppCompatActivity() {
         setData()
 
         binding!!.btnSave.setOnClickListener {
-            saveBtnClick()
+            if (binding!!.etEditName.editText!!.text.trim().isEmpty()){
+                binding!!.etEditName.editText!!.error = "Must not be empty!!"
+            } else if (binding!!.etEditEmail.editText!!.text.trim().isEmpty()){
+                binding!!.etEditEmail.editText!!.error = "Must not be empty!!"
+            } else if (binding!!.etEditDescription.editText!!.text.trim().isEmpty()){
+                binding!!.etEditDescription.editText!!.error = "Must not be empty!!"
+            } else {
+                saveBtnClick()
+            }
         }
 
         binding!!.backBtn.setOnClickListener {

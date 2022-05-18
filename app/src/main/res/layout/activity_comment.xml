@@ -17,10 +17,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginStart="22dp"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/backBtn"
             app:layout_constraintTop_toTopOf="parent">
@@ -29,19 +30,11 @@
                 android:id="@+id/subjectToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17sp"
                 android:fontFamily="serif"
+                android:text=""
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:text="Subject" />
+                android:textSize="17sp" />
 
-            <TextView
-                android:id="@+id/pointsToolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:textColor="@color/appColor"
-                android:fontFamily="serif"
-                android:text="5 Points" />
         </LinearLayout>
 
         <View
@@ -63,12 +56,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_back_24" />
 
+        <TextView
+            android:id="@+id/bookmarkCommentAc"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="0dp"
+            android:layout_marginRight="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/optionMenuCommentAc"
+            app:layout_constraintTop_toTopOf="parent"
+            app:drawableStartCompat="@drawable/ic_baseline_bookmark_add_24" />
+
         <ImageView
             android:id="@+id/optionMenuCommentAc"
-            android:layout_width="22dp"
+            android:layout_width="@dimen/_20sdp"
             android:layout_height="0dp"
-            android:padding="1dp"
-            android:layout_marginEnd="15dp"
+            android:padding="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -120,10 +123,10 @@
                     android:id="@+id/questionTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:fontFamily="serif"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
                     android:text="Question Text"
                     android:textColor="@color/black"
                     android:textSize="15.5sp"
@@ -133,14 +136,12 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image_post_comment_ac"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_width="@dimen/_37sdp"
+                    android:layout_height="@dimen/_37sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
                     android:src="@drawable/placeholder"
-                    app:civ_border_color="#E0E0E0"
-                    app:civ_border_width="1dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/questionTxt" />
@@ -149,7 +150,7 @@
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/_11sdp"
                     android:fontFamily="serif"
                     android:text="@string/name"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -164,8 +165,8 @@
                 android:id="@+id/rvComment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="7.5dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_3sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/cv"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -183,9 +184,9 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_bg_2"
         android:backgroundTint="@color/appColor"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
         android:text="@string/give_answer"
         android:textSize="17sp"
         android:textColor="@color/white"

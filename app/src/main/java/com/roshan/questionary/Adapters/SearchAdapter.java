@@ -40,11 +40,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.viewHolder
         UserModel userModel = list.get(position);
 
         holder.binding.nameOnSearch.setText(userModel.getName());
-        holder.binding.emailOnSearch.setText(userModel.getEmail());
+        holder.binding.descriptionOnSearch.setText(userModel.getSummary());
+
+        if (holder.binding.descriptionOnSearch.getText().equals("")){
+            holder.binding.descriptionOnSearch.setVisibility(View.GONE);
+        } else {
+            holder.binding.descriptionOnSearch.setVisibility(View.VISIBLE);
+        }
 
         Glide.with(context)
                 .load(userModel.getProfilePic())
-                .placeholder(R.drawable.placeholder)
+                .placeholder(R.drawable.man)
                 .into(holder.binding.profilePicSearch);
 
         holder.binding.profilePicSearch.setOnClickListener(v -> {

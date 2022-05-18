@@ -1,6 +1,7 @@
 package com.roshan.questionary.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ public class MyQuestionsFragment extends Fragment {
     MyQuestionsAdapter adapter;
     FirebaseAuth auth;
     FirebaseDatabase database;
+    ProgressDialog pd;
 
     public MyQuestionsFragment() {
         // Required empty public constructor
@@ -45,28 +47,35 @@ public class MyQuestionsFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentMyQuestionsBinding.inflate(inflater, container, false);
 
-        auth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-
-        list = new ArrayList<>();
-
-        setDataForPostAdapter();
-
-        adapter = new MyQuestionsAdapter(getContext(), list);
-        binding.recyclerView.setAdapter(adapter);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        initView();
 
         binding.backBtn.setOnClickListener(v -> pressBackButton());
 
         return binding.getRoot();
     }
 
+    private void initView(){
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
+        list = new ArrayList<>();
+
+        pd = new ProgressDialog(requireContext(), R.style.AppCompatAlertDialogStyle);
+        pd.setMessage("Please Wait...");
+        pd.setCancelable(false);
+    }
+
     private void setDataForPostAdapter() {
-        binding.progressBar6.setVisibility(View.VISIBLE);
+        pd.show();
+
         database.getReference().child("posts").addValueEventListener(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (pd.isShowing()){
+                    pd.dismiss();
+                }
+
                 list.clear();
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -77,13 +86,19 @@ public class MyQuestionsFragment extends Fragment {
                             list.add(post);
                         }
                     }
+
+                    adapter = new MyQuestionsAdapter(getContext(), list);
+                    binding.recyclerView.setAdapter(adapter);
+                    binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 }
                 adapter.notifyDataSetChanged();
-                binding.progressBar6.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                if (pd.isShowing()){
+                    pd.dismiss();
+                }
                 Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -101,6 +116,8 @@ public class MyQuestionsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        setDataForPostAdapter();
 
         requireView().setFocusableInTouchMode(true);
         requireView().requestFocus();

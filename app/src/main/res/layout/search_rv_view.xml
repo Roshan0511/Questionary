@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="1dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="horizontal"
+    android:layout_marginLeft="@dimen/_10sdp"
+    android:layout_marginRight="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_2sdp"
+    android:background="@drawable/row_background"
+    android:elevation="@dimen/_4sdp" >
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePicSearch"
-        android:layout_width="53dp"
-        android:layout_height="53dp"
-        android:src="@drawable/placeholder"
-        app:civ_border_color="@color/grey"
-        app:civ_border_width="1dp"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/_10sdp"
+        android:elevation="@dimen/_3sdp"
+        android:src="@drawable/man" />
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profilePicSearch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/profilePicSearch"
-        app:layout_constraintTop_toTopOf="@+id/profilePicSearch">
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp">
 
         <TextView
             android:id="@+id/name_on_search"
@@ -34,17 +35,17 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:fontFamily="serif"
-            android:textSize="17sp"
-            android:layout_marginBottom="4dp"
-            android:text="" />
+            android:textSize="18sp"
+            android:layout_marginBottom="@dimen/_1sdp"
+            android:text="Roshan Jha" />
 
         <TextView
-            android:id="@+id/email_on_search"
+            android:id="@+id/description_on_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14.5sp"
-            android:text="" />
+            android:textSize="15sp"
+            android:text="Junior Android Developer" />
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
