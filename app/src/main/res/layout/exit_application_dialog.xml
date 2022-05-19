@@ -26,10 +26,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/app_logo_32_px"
+                android:src="@drawable/app_logo_32p"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/todo" />
+                android:contentDescription="@string/todo"
+                app:tint="@color/appColor" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -57,7 +58,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
-                app:tint="@color/red"
+                app:tint="@color/appColor"
                 android:contentDescription="@string/todo" />
 
             <androidx.appcompat.widget.AppCompatButton

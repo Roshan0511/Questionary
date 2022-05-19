@@ -65,6 +65,7 @@
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/activity_question_comment.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/activity_sign_in.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/activity_sign_up.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/activity_splash_screen.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/add_bio_dialog.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/add_passion_dialog.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/layout/alert_dialog_exit.xml" value="0.26871794871794874" />
@@ -112,6 +113,8 @@
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/menu/home_fragment_menu.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/menu/post_menu.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/menu/search_fragemnt_menu.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.181" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Questionary/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.181" />
       </map>
     </option>
   </component>
