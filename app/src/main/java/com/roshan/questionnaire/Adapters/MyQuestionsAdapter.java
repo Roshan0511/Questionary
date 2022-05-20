@@ -80,7 +80,7 @@ public class MyQuestionsAdapter extends RecyclerView.Adapter<MyQuestionsAdapter.
                 PostModel post = snapshot.getValue(PostModel.class);
                 assert post != null;
 
-                Glide.with(context)
+                Glide.with(context.getApplicationContext())
                         .load(post.getProfilePic())
                         .placeholder(R.drawable.placeholder)
                         .into(holder.binding.userProfilePic);

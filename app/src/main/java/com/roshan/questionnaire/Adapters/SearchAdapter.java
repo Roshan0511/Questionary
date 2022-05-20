@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.roshan.questionnaire.Dialogs.ShowingProfileDialog;
+import com.roshan.questionnaire.Fragments.UserProfileDetails;
 import com.roshan.questionnaire.Models.UserModel;
 import com.roshan.questionnaire.R;
 import com.roshan.questionnaire.databinding.SearchRvViewBinding;
@@ -57,6 +60,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.viewHolder
             ShowingProfileDialog dialog = new ShowingProfileDialog(userModel.getUserId());
             dialog.show(((FragmentActivity)context).getSupportFragmentManager(), dialog.getTag());
             dialog.setCancelable(false);
+        });
+
+        holder.binding.searchItem.setOnClickListener(v -> {
+            UserProfileDetails userDetails = new UserProfileDetails(userModel.getUserId());
+            FragmentTransaction transaction = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.linearLayout, userDetails);
+            transaction.commit();
         });
     }
 
