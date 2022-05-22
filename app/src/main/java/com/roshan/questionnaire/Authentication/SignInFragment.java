@@ -46,6 +46,10 @@ public class SignInFragment extends Fragment {
             addFragment(new SignUpFragment(),true,"SignUp");
         });
 
+        binding.forgotPassword.setOnClickListener(v -> {
+            addFragment(new ForgotPassword(), true, "ForgetPass");
+        });
+
 
         return binding.getRoot();
     }

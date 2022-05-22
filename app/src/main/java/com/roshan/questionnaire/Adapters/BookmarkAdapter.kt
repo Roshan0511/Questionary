@@ -44,62 +44,66 @@ class BookmarkAdapter(private val context: Context?, private val list: List<Stri
             .addValueEventListener(object : ValueEventListener {
                 @SuppressLint("SimpleDateFormat")
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val question: PostModel? = snapshot.getValue(PostModel::class.java)
+                    if (snapshot.exists()){
+                        val question: PostModel? = snapshot.getValue(PostModel::class.java)
 
-                    holder.binding!!.question.text = question!!.questionTxt
-                    holder.binding.category.text = question.subject
+                        holder.binding!!.question.text = question!!.questionTxt
+                        holder.binding.category.text = question.subject
 
-                    if (question.questionImage.isEmpty()){
-                        holder.binding.imageChecker.visibility = View.GONE
-                    } else {
-                        holder.binding.imageChecker.visibility = View.VISIBLE
-                    }
+                        if (question.questionImage.isEmpty()){
+                            holder.binding.imageChecker.visibility = View.GONE
+                        } else {
+                            holder.binding.imageChecker.visibility = View.VISIBLE
+                        }
 
 
-                    database.reference
-                        .child("Users")
-                        .child(question.userId)
-                        .addValueEventListener(object : ValueEventListener {
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                if (snapshot.exists()){
-                                    val userModel: UserModel? = snapshot.getValue(UserModel::class.java)
-                                    if (context != null){
-                                        Glide.with(context.applicationContext)
-                                            .load(userModel!!.profilePic)
-                                            .placeholder(R.drawable.man)
-                                            .into(holder.binding.userProfilePic)
+                        database.reference
+                            .child("Users")
+                            .child(question.userId)
+                            .addValueEventListener(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    if (snapshot.exists()){
+                                        val userModel: UserModel? = snapshot.getValue(UserModel::class.java)
+                                        if (context != null){
+                                            Glide.with(context.applicationContext)
+                                                .load(userModel!!.profilePic)
+                                                .placeholder(R.drawable.man)
+                                                .into(holder.binding.userProfilePic)
+                                        }
+                                    }
+                                    else{
+                                        Toast.makeText(context, "No Data Found", Toast.LENGTH_SHORT).show()
                                     }
                                 }
-                                else{
-                                    Toast.makeText(context, "No Data Found", Toast.LENGTH_SHORT).show()
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    Toast.makeText(context, "Error : ${error.message}", Toast.LENGTH_SHORT).show()
                                 }
-                            }
 
-                            override fun onCancelled(error: DatabaseError) {
-                                Toast.makeText(context, "Error : ${error.message}", Toast.LENGTH_SHORT).show()
-                            }
-
-                        })
+                            })
 
 
-                    holder.binding.time.text = SimpleDateFormat("d MMM, h:mm aaa").format(Date((question.time.toString() + "").toLong()))
+                        holder.binding.time.text = SimpleDateFormat("d MMM, h:mm aaa").format(Date((question.time.toString() + "").toLong()))
 
-                    holder.binding.imageChecker.setOnClickListener {
-                        val intent = Intent(context, CommentActivity::class.java)
-                        intent.putExtra("postId", postId)
-                        intent.putExtra("userId", question.userId)
-                        context!!.startActivity(intent)
+                        holder.binding.imageChecker.setOnClickListener {
+                            val intent = Intent(context, CommentActivity::class.java)
+                            intent.putExtra("postId", postId)
+                            intent.putExtra("userId", question.userId)
+                            context!!.startActivity(intent)
+                        }
+
+                        holder.binding.giveAnswer.setOnClickListener {
+                            val intent = Intent(context, CommentActivity::class.java)
+                            intent.putExtra("postId", postId)
+                            intent.putExtra("userId", question.userId)
+                            context!!.startActivity(intent)
+                        }
+
+                        holder.binding.bookmark.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_bookmark_added_24,
+                            0, 0, 0)
+                    } else {
+                        holder.binding!!.questionItem.visibility = View.GONE
                     }
-
-                    holder.binding.giveAnswer.setOnClickListener {
-                        val intent = Intent(context, CommentActivity::class.java)
-                        intent.putExtra("postId", postId)
-                        intent.putExtra("userId", question.userId)
-                        context!!.startActivity(intent)
-                    }
-
-                    holder.binding.bookmark.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_bookmark_added_24,
-                        0, 0, 0)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
